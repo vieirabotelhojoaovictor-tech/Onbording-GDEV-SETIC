@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CODE ARCADE — Onboarding da CODE</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#0b1230;--bg2:#111a40;--card:#16225a;--ln:#2b3f9e;--blue:#2f6bff;--pur:#8b5cf6;--cy:#22d3ee;--yel:#fbbf24;--grn:#34d399;--red:#f87171;--tx:#e8edff;--mu:#a9b8ec;--px:'Press Start 2P',ui-monospace,monospace;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{height:auto;margin:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.55 Inter,system-ui,sans-serif;background-image:linear-gradient(rgba(47,107,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(47,107,255,.07) 1px,transparent 1px);background-size:24px 24px}
+#ca{max-width:1040px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:var(--px);font-weight:400;line-height:1.6;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--cy);outline-offset:2px}
+.box{background:var(--card);border:3px solid var(--ln);box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--ln),6px 6px 0 5px rgba(0,0,0,.35)}
+.hud{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:10px 14px;margin:6px 5px 26px;background:var(--bg2)}
+.hud .px{font-family:var(--px);font-size:11px}
+.hud .xpw{flex:1;min-width:160px}
+.bar{height:14px;background:#080d26;border:2px solid var(--ln);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--cy);transition:width .6s ease}
+.bar.xp i{background:repeating-linear-gradient(90deg,var(--yel) 0 8px,#d99a0b 8px 10px)}
+.ib{background:var(--card);border:2px solid var(--ln);padding:6px 10px;font-size:13px}
+.ib:hover{border-color:var(--cy)}.ib:active{transform:translateY(2px)}
+#view.in{animation:inn .35s ease-out}
+@keyframes inn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hero{text-align:center;padding:28px 18px 34px;margin:0 5px}
+.hero svg.sp{width:120px;height:144px;image-rendering:pixelated;animation:bob 1.6s steps(2) infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.logo{display:inline-block;border:2px solid var(--cy);padding:4px 10px;font-family:var(--px);font-size:10px;color:var(--cy);margin-bottom:14px}
+h1{font-size:clamp(22px,5vw,40px);color:var(--yel);text-shadow:3px 3px 0 var(--pur)}
+.sub{font-family:var(--px);font-size:12px;color:var(--cy);margin:14px 0 18px}
+.hero p{max-width:640px;margin:10px auto;color:var(--mu)}
+.load{width:240px;margin:18px auto}.load i{animation:ld 1.4s steps(12) forwards}
+@keyframes ld{to{width:100%}}
+.btn{font-family:var(--px);font-size:13px;color:#08102e;background:var(--yel);border:3px solid #fff3c4;padding:16px 22px;box-shadow:0 6px 0 #a8760a;animation:pulse 2s ease-in-out infinite;transition:box-shadow .2s,filter .2s}
+.btn:hover{box-shadow:0 6px 0 #a8760a,0 0 22px rgba(251,191,36,.7);filter:brightness(1.08)}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 #a8760a;animation:none}
+@keyframes pulse{50%{transform:scale(1.04)}}
+.note{font-size:13px;color:var(--mu);margin-top:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px;margin:22px 5px}
+.lv{text-align:left;padding:16px;display:flex;flex-direction:column;gap:8px;transition:transform .2s}
+.lv:hover,.lv:focus-visible{transform:scale(1.035);animation:glow 1.4s ease-in-out infinite}
+.lv:hover .ic{animation:characterBob 1.8s ease-in-out infinite}
+@keyframes glow{50%{border-color:var(--cy);box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--cy),0 0 18px var(--cy)}}
+@keyframes characterBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.lv .n{font-family:var(--px);font-size:10px;color:var(--cy)}.lv h3{font-size:12px}.ic{font-size:30px;display:inline-block}
+.lv small{color:var(--mu)}.chip{align-self:flex-start;font-family:var(--px);font-size:9px;padding:5px 7px;border:2px solid}
+.st-open .chip{color:var(--cy)}.st-done .chip{color:var(--grn)}.st-lock .chip{color:var(--red)}.st-lock{opacity:.8}.st-done{border-color:var(--grn)}
+.sec{margin:34px 5px 0}.sec h2{font-size:13px;color:var(--yel);margin-bottom:16px}
+.bg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}
+.bd{padding:12px;text-align:center;font-size:13px}.bd svg{width:54px;height:54px;image-rendering:pixelated}.bd b{display:block;font-size:13px}
+.bd.lk svg{filter:grayscale(1) brightness(.5)}.bd.lk{opacity:.75}.bd.new svg{animation:pop .8s}
+@keyframes pop{0%{transform:scale(0) rotate(-180deg)}70%{transform:scale(1.3) rotate(10deg)}100%{transform:none}}
+.hist{list-style:none;padding:12px 16px;margin:0}.hist li{padding:4px 0;border-bottom:1px dashed var(--ln)}
+.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 5px 18px}
+.pn{padding:18px;margin:0 5px 26px}.pn h2{font-size:clamp(14px,3vw,20px);color:var(--yel)}.pn .sb{color:var(--cy);margin:6px 0 12px}
+.pn p{margin:4px 0}.cols{display:grid;grid-template-columns:2fr 1fr;gap:26px;margin:0 5px}
+@media(max-width:760px){.cols{grid-template-columns:1fr}}
+h3.s{font-size:11px;color:var(--cy);margin:4px 0 12px}
+.ms{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:var(--bg2);border:2px solid var(--ln);padding:11px 12px;margin-bottom:10px;transition:transform .15s,border-color .2s}
+.ms:hover{border-color:var(--cy);transform:translateX(4px)}.ms:active{transform:scale(.98)}
+.cb{flex:none;width:24px;height:24px;border:2px solid var(--cy);display:grid;place-items:center;color:#08102e;font-weight:700}
+.ms.on{border-color:var(--grn)}.ms.on .cb{background:var(--grn);border-color:var(--grn);animation:pop .5s}.ms.on .mt{color:var(--mu)}
+.mt{flex:1}.xx{font-family:var(--px);font-size:9px;color:var(--yel)}
+.mh{margin:14px 0 8px;font-weight:600}.subs{margin-left:18px}
+.rw{list-style:none;padding:0;margin:0}.rw li{margin-bottom:10px}
+.npc{display:flex;gap:12px;align-items:flex-start;padding:14px;animation:inn .5s}
+.npc svg{flex:none;width:60px;height:72px;image-rendering:pixelated;animation:bob 1.6s steps(2) infinite}
+.say{background:#fff;color:#0b1230;padding:10px 12px;border:3px solid var(--cy);position:relative;font-size:14px;margin-top:6px}
+.say:before{content:"";position:absolute;left:-12px;top:14px;border:6px solid transparent;border-right-color:var(--cy)}
+.fx{position:fixed;z-index:50;font-family:var(--px);font-size:16px;color:var(--yel);text-shadow:2px 2px 0 #000;pointer-events:none;animation:up 1.1s ease-out forwards}
+@keyframes up{from{opacity:1;transform:translate(-50%,0)}to{opacity:0;transform:translate(-50%,-70px)}}
+#vic{position:fixed;inset:0;z-index:60;background:rgba(5,8,25,.88);display:grid;place-items:center;padding:16px;overflow:auto}
+#vic[hidden]{display:none}
+.vb{max-width:440px;text-align:center;padding:26px;position:relative;overflow:hidden;animation:pop .6s}
+.vb h2{color:var(--grn);font-size:16px;margin-bottom:12px}.vb svg.m{width:96px;height:96px;image-rendering:pixelated;animation:pop 1s}
+.vb .npc{text-align:left}.cf{position:absolute;top:-10px;width:8px;height:8px;animation:fall 2.2s linear infinite}
+@keyframes fall{to{transform:translateY(520px) rotate(360deg)}}
+.det{margin:-4px 0 14px 36px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.nt{flex-basis:100%;margin:0;color:var(--mu);font-size:14px}
+.lk{display:inline-block;background:transparent;border:2px solid var(--cy);color:var(--cy);padding:6px 10px;font-size:13px;text-decoration:none}
+.lk:hover{background:var(--cy);color:#08102e}
+.pps{display:flex;gap:14px;flex-basis:100%;flex-wrap:wrap}.pp{margin:0;text-align:center;width:100px;font-size:13px}.pp small{display:block;color:var(--mu)}
+.ph{display:grid;place-items:center;width:72px;height:72px;margin:0 auto 4px;border-radius:50%;border:3px solid var(--yel);overflow:hidden;background:var(--bg2);font-family:var(--px);font-size:14px}
+.ph img{width:100%;height:100%;object-fit:cover}
+.tl{list-style:none;margin:16px 0 0;padding:0 0 0 18px;border-left:4px solid var(--ln)}.tl li{margin-bottom:20px;animation:inn .5s both}
+.gt{margin:0 5px 8px;color:var(--yel);font-family:var(--px);font-size:12px}.gn{margin:0 5px 12px;color:var(--mu)}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* ===== CODE ARCADE / PREMIUM LANDING (inspirado na direção visual Aller Studio) ===== */
+body.start-screen{background:#090b10;background-image:radial-gradient(ellipse at 78% 42%,rgba(40,91,255,.19),transparent 38%),radial-gradient(ellipse at 20% 85%,rgba(119,54,207,.16),transparent 34%);overflow-x:hidden}
+body.start-screen:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,black,transparent 92%)}
+body.start-screen #ca{position:relative;z-index:1;max-width:none;min-height:100svh;padding:0 5.2vw 30px;display:flex;flex-direction:column}
+body.start-screen #hud,body.start-screen #ca>footer{display:none}
+body.start-screen #view{flex:1;display:flex;min-height:calc(100svh - 30px)}
+.landing{position:relative;width:100%;min-height:calc(100svh - 30px);display:flex;flex-direction:column;overflow:hidden}
+.landing:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.12;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.08) 4px);mix-blend-mode:screen}
+.landing-nav{height:94px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.13);position:relative;z-index:3}
+.brand-lock{display:flex;align-items:center;gap:13px;color:#fff;font-weight:800;letter-spacing:.13em;font-size:13px}
+.brand-mark{width:38px;height:38px;border:1px solid rgba(255,255,255,.6);border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(46,107,255,.35),rgba(139,92,246,.2));box-shadow:0 0 28px rgba(47,107,255,.22);font-size:18px}
+.nav-right{display:flex;align-items:center;gap:18px;color:#9ba3b6;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.nav-status{display:flex;align-items:center;gap:8px}.nav-status:before{content:"";width:7px;height:7px;border-radius:50%;background:#62e6b4;box-shadow:0 0 12px #62e6b4}
+.sound-toggle{background:transparent;border:1px solid rgba(255,255,255,.2);color:#e9ecf4;padding:10px 13px;border-radius:999px;font-size:11px;letter-spacing:.08em;transition:.25s}
+.sound-toggle:hover{border-color:#8c9cff;background:rgba(255,255,255,.07);transform:translateY(-2px)}
+.landing-main{position:relative;z-index:2;flex:1;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(380px,.95fr);align-items:center;gap:3vw;padding:54px 0 42px}
+.landing-copy{position:relative;z-index:3;max-width:760px;animation:landIn .9s cubic-bezier(.2,.7,.2,1) both}
+.eyebrow{display:flex;align-items:center;gap:12px;color:#a8b4d0;font-size:10px;letter-spacing:.25em;text-transform:uppercase;margin-bottom:27px}
+.eyebrow:before{content:"";width:34px;height:1px;background:#7f8fff;box-shadow:0 0 12px #7f8fff}
+.landing-title{font-family:Inter,system-ui,sans-serif!important;font-size:clamp(58px,9.2vw,142px)!important;line-height:.82!important;letter-spacing:-.095em!important;font-weight:800!important;color:#f5f6fa!important;text-shadow:none!important;margin:0 0 24px!important;max-width:850px}
+.landing-title span{display:block;color:transparent;background:linear-gradient(100deg,#f6f7fb 5%,#b9c7ff 48%,#8c73ff 92%);background-clip:text;-webkit-background-clip:text}
+.landing-sub{font-size:clamp(15px,1.6vw,21px);line-height:1.45;color:#d3d9e8;font-weight:500;letter-spacing:-.025em;margin:0 0 16px}
+.landing-desc{font-size:14px;line-height:1.8;color:#929bb0;max-width:540px;margin:0 0 34px}
+.start-actions{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.start-cta{position:relative;display:inline-flex;align-items:center;gap:22px;padding:17px 22px;border:1px solid rgba(178,190,255,.75);border-radius:5px;background:linear-gradient(110deg,#f4f6ff,#cfd7ff);color:#0b1020;font:800 11px Inter,system-ui,sans-serif;letter-spacing:.16em;box-shadow:0 10px 35px rgba(83,108,255,.2);transition:transform .25s,box-shadow .25s,background .25s;animation:ctaBreath 3s ease-in-out infinite}
+.start-cta .arrow{font-size:18px;line-height:1;transition:transform .25s}
+.start-cta:hover{transform:translateY(-4px);box-shadow:0 15px 42px rgba(83,108,255,.38);background:#fff}
+.start-cta:hover .arrow{transform:translateX(5px)}
+.start-cta:active{transform:translateY(1px) scale(.985)}
+.start-hint{color:#7e879b;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.landing-art{position:relative;min-height:530px;display:flex;align-items:center;justify-content:center;isolation:isolate;animation:landIn 1.1s .12s cubic-bezier(.2,.7,.2,1) both}
+.art-glow{position:absolute;width:min(39vw,510px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(67,102,255,.28),rgba(104,70,214,.12) 44%,transparent 70%);filter:blur(14px);animation:glowDrift 8s ease-in-out infinite}
+.art-ring{position:absolute;width:min(39vw,480px);aspect-ratio:1;border:1px solid rgba(150,166,255,.22);border-radius:50%;transform:rotate(-24deg) scaleY(.72);box-shadow:0 0 70px rgba(74,102,255,.12),inset 0 0 50px rgba(74,102,255,.08);animation:ringSpin 28s linear infinite}
+.art-ring:before,.art-ring:after{content:"";position:absolute;border:1px solid rgba(150,166,255,.15);border-radius:50%;inset:26px;transform:rotate(38deg)}
+.art-ring:after{inset:62px;transform:rotate(-55deg)}
+.art-cross{position:absolute;width:11px;height:11px;border:1px solid #9baaff;transform:rotate(45deg);box-shadow:0 0 15px #758cff;top:17%;right:14%}
+.art-orb{position:absolute;width:8px;height:8px;border-radius:50%;background:#a9b5ff;box-shadow:0 0 20px 5px rgba(125,145,255,.55);left:15%;bottom:22%;animation:orbFloat 4s ease-in-out infinite}
+.team-stage{position:relative;width:min(100%,590px);height:475px;display:flex;align-items:flex-end;justify-content:center;gap:clamp(7px,1.4vw,22px);padding:0 10px 8px}
+.team-card{position:relative;width:30%;max-width:174px;height:clamp(260px,31vw,390px);border-radius:90px 90px 9px 9px;overflow:hidden;border:1px solid rgba(191,201,255,.28);background:linear-gradient(180deg,rgba(63,84,155,.25),rgba(16,21,42,.94));box-shadow:0 20px 70px rgba(0,0,0,.38);transform:translateY(18px);transition:transform .45s,border-color .35s,filter .35s;animation:avatarRise .9s both}
+.team-card:nth-child(1){animation-delay:.18s;transform:translateY(28px) rotate(-4deg)}
+.team-card:nth-child(2){height:clamp(300px,35vw,430px);z-index:2;animation-delay:.34s}
+.team-card:nth-child(3){animation-delay:.5s;transform:translateY(28px) rotate(4deg)}
+.team-card:hover{transform:translateY(-12px) scale(1.035)!important;border-color:rgba(181,195,255,.85);filter:brightness(1.12);z-index:4}
+.team-card img{width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;filter:saturate(.82) contrast(1.04);mask-image:linear-gradient(to bottom,#000 72%,transparent 100%)}
+.team-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 48%,rgba(8,11,24,.96) 100%),linear-gradient(135deg,rgba(103,126,255,.12),transparent 48%);pointer-events:none}
+.team-meta{position:absolute;z-index:2;bottom:18px;left:13px;right:10px;text-align:left}
+.team-meta small{display:block;color:#9ca9d0;font-size:8px;letter-spacing:.2em;margin-bottom:5px}
+.team-meta strong{display:block;color:#fff;font-size:12px;letter-spacing:.02em}
+.art-caption{position:absolute;right:0;bottom:0;color:#727e9a;font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+.landing-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 0 0;border-top:1px solid rgba(255,255,255,.12);color:#69748d;font-size:9px;letter-spacing:.16em;text-transform:uppercase;position:relative;z-index:2}
+.landing-foot strong{color:#aeb9d5;font-weight:600}
+.landing-index{display:flex;align-items:center;gap:10px}.landing-index:before{content:"";width:28px;height:1px;background:#788cff}
+@keyframes landIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes avatarRise{from{opacity:0;translate:0 35px}to{opacity:1;translate:0 0}}
+@keyframes ringSpin{to{transform:rotate(336deg) scaleY(.72)}}
+@keyframes glowDrift{50%{transform:scale(1.1) translate(10px,-12px);opacity:.8}}
+@keyframes orbFloat{50%{transform:translate(18px,-26px)}}
+@keyframes ctaBreath{50%{box-shadow:0 10px 42px rgba(83,108,255,.32)}}
+@media(max-width:900px){body.start-screen #ca{padding:0 25px 22px}.landing-main{grid-template-columns:1fr;gap:8px;padding:58px 0 25px}.landing-copy{max-width:760px}.landing-art{min-height:390px;margin-top:5px}.team-stage{height:390px}.team-card{height:300px}.team-card:nth-child(2){height:350px}.art-glow{width:370px}.art-ring{width:350px}.landing-title{font-size:clamp(60px,12vw,105px)!important}.landing-foot{margin-top:8px}}
+@media(max-width:560px){body.start-screen #ca{padding:0 18px 18px}.landing-nav{height:72px}.brand-lock{font-size:10px}.brand-mark{width:32px;height:32px}.nav-right{gap:10px;font-size:8px}.nav-status{display:none}.sound-toggle{padding:8px 10px}.landing-main{padding:46px 0 22px}.eyebrow{font-size:8px;margin-bottom:22px}.landing-title{font-size:clamp(52px,14vw,76px)!important}.landing-sub{font-size:16px}.landing-desc{font-size:13px;margin-bottom:25px}.start-cta{padding:15px 17px;font-size:10px}.start-hint{font-size:8px}.landing-art{min-height:310px;margin:0 -5px}.team-stage{height:310px;gap:7px}.team-card{height:235px;border-radius:70px 70px 8px 8px}.team-card:nth-child(2){height:275px}.team-meta{left:8px;bottom:12px}.team-meta strong{font-size:10px}.team-meta small{font-size:7px}.art-glow{width:280px}.art-ring{width:270px}.art-caption{font-size:7px}.landing-foot{font-size:7px;letter-spacing:.1em}.landing-foot .foot-right{display:none}}
+@media(prefers-reduced-motion:reduce){.landing-copy,.landing-art,.team-card,.art-ring,.art-glow,.art-orb,.start-cta{animation:none!important;transition:none!important}}
+
+/* ===== Materiais de onboarding por gerência ===== */
+.deck-wrap{margin:0 5px 24px;padding:16px;background:rgba(12,17,35,.78);border:1px solid rgba(130,151,255,.25);border-radius:14px;box-shadow:0 18px 55px rgba(0,0,0,.22)}
+.deck-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.deck-head strong{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#dce4ff}
+.deck-head a{color:#9db2ff;font-size:12px;text-decoration:none;border:1px solid rgba(157,178,255,.4);border-radius:999px;padding:7px 11px}
+.deck-head a:hover{background:rgba(120,143,255,.15);border-color:#9db2ff}
+.deck-frame{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:9px;background:#090d1c;border:1px solid rgba(255,255,255,.12)}
+.deck-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.wiki-ref{margin:0 5px 20px;padding:13px 16px;border:1px solid rgba(34,211,238,.3);border-radius:12px;background:rgba(34,211,238,.06);font-size:13px}
+.wiki-ref a{color:#8deafa}
+@media(max-width:560px){.deck-wrap{padding:10px;margin-left:0;margin-right:0}.deck-head strong{font-size:11px}.deck-head a{font-size:10px}}
+
+
+/* Atualizações: programação no hero, seleção premium e missões em nova aba */
+.code-scene{min-height:530px}
+.code-window{position:relative;z-index:2;width:min(88%,490px);min-height:330px;border:1px solid rgba(163,179,255,.34);border-radius:15px;background:linear-gradient(145deg,rgba(24,31,58,.96),rgba(8,12,26,.97));box-shadow:0 35px 100px rgba(0,0,0,.5),0 0 65px rgba(89,111,255,.17);transform:perspective(900px) rotateY(-8deg) rotateX(3deg);animation:editorFloat 7s ease-in-out infinite}
+.code-top{height:48px;display:flex;align-items:center;gap:7px;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.09)}
+.code-top>span{width:8px;height:8px;border-radius:50%;background:#ff7185}.code-top>span:nth-child(2){background:#f5c451}.code-top>span:nth-child(3){background:#55d6a5}.code-top small{margin-left:12px;color:#8793b4;font:10px ui-monospace,monospace}
+.code-lines{display:flex;flex-direction:column;gap:16px;padding:28px}.ln{display:block;height:7px;border-radius:8px;background:linear-gradient(90deg,#8ea5ff,rgba(142,165,255,.22));opacity:.8}
+.ln.w70{width:70%}.ln.w48{width:48%}.ln.w86{width:86%}.ln.w58{width:58%}.ln.w76{width:76%}.ln.w42{width:42%}.ln.w68{width:68%}.ln.w52{width:52%}.ln.w82{width:82%}.ln.purple{background:linear-gradient(90deg,#bb8cff,rgba(187,140,255,.12))}.ln.cyan{background:linear-gradient(90deg,#54dff2,rgba(84,223,242,.12))}
+.code-terminal{margin:0 22px;padding:13px 15px;border-radius:7px;background:#070b18;color:#8e9bb8;font:11px ui-monospace,monospace}.code-terminal b{color:#55d6a5}.code-terminal span{color:#65e5b2}
+.cursor{display:inline-block;width:7px;height:13px;margin-left:4px;vertical-align:middle;background:#8ea5ff;animation:blink 1.1s steps(2) infinite}
+.code-orbit{position:absolute;z-index:3;display:grid;place-items:center;width:62px;height:62px;border:1px solid rgba(155,174,255,.45);border-radius:17px;background:rgba(12,19,43,.86);color:#d8e0ff;box-shadow:0 12px 35px rgba(0,0,0,.3),0 0 28px rgba(99,121,255,.17);font:13px ui-monospace,monospace}
+.orbit-a{top:13%;right:8%;animation:orbitBob 5s ease-in-out infinite}.orbit-b{bottom:17%;left:2%;font-weight:800;color:#74e4f4;animation:orbitBob 6s 1s ease-in-out infinite}.orbit-c{top:20%;left:7%;width:42px;height:42px;border-radius:50%;font-size:10px;color:#d0a6ff;animation:orbitBob 5.5s .5s ease-in-out infinite}
+@keyframes editorFloat{0%,100%{transform:perspective(900px) rotateY(-8deg) rotateX(3deg) translateY(0)}50%{transform:perspective(900px) rotateY(-5deg) rotateX(1deg) translateY(-10px)}}@keyframes orbitBob{0%,100%{translate:0 0}50%{translate:0 -12px}}@keyframes blink{50%{opacity:0}}
+.team-stage,.team-card,.team-card img,.team-meta{display:none!important}
+body.arcade-screen{background:#090b10;background-image:radial-gradient(ellipse at 78% 5%,rgba(40,91,255,.17),transparent 35%),radial-gradient(ellipse at 12% 90%,rgba(119,54,207,.13),transparent 34%);color:#eef1fb;min-height:100vh}
+body.arcade-screen:before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.13;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:72px 72px}
+body.arcade-screen #ca{position:relative;z-index:1;max-width:1320px;padding:20px clamp(18px,4vw,58px) 32px}
+body.arcade-screen #hud{display:flex;margin:0 0 30px;padding:13px 17px;border:1px solid rgba(160,175,255,.2);border-radius:12px;background:rgba(15,20,39,.76);box-shadow:0 14px 45px rgba(0,0,0,.25);backdrop-filter:blur(14px)}
+body.arcade-screen #hud .ib{border:1px solid rgba(160,175,255,.25);border-radius:7px;background:rgba(255,255,255,.04)}body.arcade-screen #hud .ib:hover{border-color:#9eafff;background:rgba(130,150,255,.1)}
+body.arcade-screen #ca>footer{display:block;color:#77819a}
+.arcade-shell{max-width:1180px;margin:0 auto}.arcade-kicker{text-align:center;color:#929db8;font-size:9px;letter-spacing:.24em;text-transform:uppercase}
+.arcade-heading{display:flex;align-items:center;justify-content:center;gap:22px;margin:10px 0 4px}.arcade-heading h1{font:800 clamp(42px,8vw,86px)/.95 Inter,system-ui,sans-serif;color:#f4f6ff;letter-spacing:-.08em;text-shadow:none}.arcade-heading h1 span{color:#9aaaff}
+.arcade-heading-line{height:1px;width:min(14vw,150px);background:linear-gradient(90deg,transparent,#8296ff)}.arcade-heading-line:last-child{transform:rotate(180deg)}
+.arcade-lead{text-align:center;color:#a2abc1;font-size:13px;margin:14px auto 30px}.arcade-progress{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#8792ad;font-size:9px;letter-spacing:.15em;margin:0 4px 13px}.arcade-progress b{color:#c9d2f3;font-weight:600}
+.arcade-levels{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:15px;margin:0 4px}
+body.arcade-screen .lv{position:relative;min-height:230px;padding:21px 17px;border:1px solid rgba(151,168,255,.2);border-radius:12px;background:linear-gradient(155deg,rgba(26,34,65,.88),rgba(12,16,31,.96));box-shadow:0 18px 38px rgba(0,0,0,.2);gap:10px}
+body.arcade-screen .lv:hover:not(:disabled),body.arcade-screen .lv:focus-visible{transform:translateY(-6px);border-color:#8c9eff;box-shadow:0 20px 45px rgba(52,78,180,.22),0 0 28px rgba(110,132,255,.13);animation:none}
+body.arcade-screen .lv:disabled{opacity:.42;cursor:not-allowed;filter:saturate(.55)}
+body.arcade-screen .lv .ic{display:inline-block;transform-origin:center bottom}
+body.arcade-screen .lv .ic.emote-activated{animation:characterBob 1.8s ease-in-out infinite}
+body.arcade-screen .lv:active:not(:disabled) .ic{animation:characterBob 1.8s ease-in-out infinite}
+body.arcade-screen .lv .ic{font-size:35px;align-self:flex-start}body.arcade-screen .lv h3{font:700 14px/1.4 Inter,system-ui,sans-serif;color:#f1f3ff}
+body.arcade-screen .lv small{font-size:11px;line-height:1.5;color:#9ba6c2}body.arcade-screen .lv .n{font:600 9px Inter,system-ui,sans-serif;letter-spacing:.16em;color:#98aaff}
+body.arcade-screen .lv .chip{font:600 9px Inter,system-ui,sans-serif;letter-spacing:.08em;border:0;padding:4px 0;color:#a9b8ff}
+body.arcade-screen .lv .bar{height:5px;border:0;border-radius:99px;background:#252d49}body.arcade-screen .lv .bar i{background:linear-gradient(90deg,#6c83ff,#52d9e9);border-radius:99px}
+body.arcade-screen .lv.st-done{border-color:rgba(78,220,167,.5)}
+.final-gate{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:28px 4px 0;padding:21px 23px;border:1px solid rgba(150,167,255,.22);border-radius:12px;background:linear-gradient(110deg,rgba(39,49,92,.65),rgba(15,19,37,.8))}
+.final-gate small{font-size:9px;letter-spacing:.18em;color:#9aaaff}.final-gate h2{font:700 16px Inter,sans-serif;margin:5px 0;color:#eef1ff}.final-gate p{font-size:12px;color:#9ca7c1;margin:0;max-width:620px}
+.final-button{border:1px solid rgba(185,197,255,.6);border-radius:7px;padding:13px 17px;background:linear-gradient(110deg,#e6eaff,#b9c6ff);color:#11182f;font:700 10px Inter,sans-serif;letter-spacing:.08em;white-space:nowrap;cursor:pointer;transition:.25s}
+.final-button:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 12px 28px rgba(94,117,255,.28)}.final-button:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.4)}
+body.arcade-screen .sec h2{font:700 12px Inter,sans-serif;letter-spacing:.15em;color:#c4ceef}body.arcade-screen .bd{border:1px solid rgba(151,168,255,.17);border-radius:10px;background:rgba(18,24,45,.7);box-shadow:none}
+.mission-card{margin:0 0 12px;padding:14px 15px;border:1px solid rgba(145,162,255,.22);border-radius:10px;background:rgba(16,22,43,.82);transition:border-color .25s,transform .25s}
+.mission-card:hover{border-color:rgba(119,151,255,.7);transform:translateY(-2px)}.mission-main{display:flex;align-items:center;gap:12px}
+.mission-icon{width:30px;height:30px;display:grid;place-items:center;flex:none;border-radius:9px;background:rgba(113,135,255,.13);color:#b9c8ff;font-size:14px}
+.mission-main .mt{color:#e5eaff;font-size:13px}.mission-actions{display:flex;justify-content:flex-end;margin-top:11px}
+.mission-open{border:1px solid rgba(144,163,255,.45);border-radius:6px;padding:8px 12px;background:rgba(115,137,255,.1);color:#dce4ff;font:700 9px Inter,sans-serif;letter-spacing:.09em;cursor:pointer;transition:.2s}
+.mission-open:hover{background:rgba(115,137,255,.23);border-color:#aebcff;transform:translateY(-2px)}
+.mission-done{border-color:rgba(63,210,158,.45);background:rgba(16,45,43,.55)}.done-label{font-size:10px;color:#68e1b1;font-weight:700;letter-spacing:.08em}.done-label.big{font-size:13px;margin:12px 0}
+.activity-page{max-width:880px;margin:4vh auto;padding:0 18px}.activity-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#8c9ab9;font-size:9px;letter-spacing:.17em}
+.activity-panel{margin-top:25px;padding:clamp(22px,5vw,48px);border:1px solid rgba(155,173,255,.25);border-radius:16px;background:linear-gradient(145deg,rgba(24,32,63,.96),rgba(9,13,27,.98));box-shadow:0 30px 90px rgba(0,0,0,.38)}
+.activity-mark{color:#a6b5ff;font-size:9px;letter-spacing:.2em;margin-bottom:15px}.activity-panel h1{font:800 clamp(26px,5vw,42px)/1.15 Inter,sans-serif;color:#f1f4ff;text-shadow:none}
+.activity-panel>p{color:#abb5ce;line-height:1.8;font-size:14px}.activity-resources{display:grid;gap:12px;margin:24px 0;padding:17px;border:1px solid rgba(145,162,255,.18);border-radius:9px;background:rgba(255,255,255,.025)}
+.activity-resources>b{font-size:9px;letter-spacing:.17em;color:#9cafff}.activity-complete{margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1)}
+.activity-complete>p{color:#9ba7c2;font-size:12px}.activity-back{display:inline-block;margin-top:23px;color:#aab9ff;font-size:11px;text-decoration:none}
+@media(max-width:680px){.final-gate{align-items:flex-start;flex-direction:column}.final-button{white-space:normal}.arcade-heading-line{width:8vw}.code-window{width:92%;min-height:280px}.code-scene{min-height:350px}.code-lines{gap:12px;padding:22px}.orbit-a{right:0}.orbit-b{left:0}}
+@media(prefers-reduced-motion:reduce){.code-window,.code-orbit,.cursor,.lv .ic{animation:none!important}}
+
+
+/* Navegação interna de atividades e grupos */
+.activity-page{max-width:1100px;margin:18px auto;padding:0 12px}
+.activity-panel{border:1px solid var(--ln);background:linear-gradient(145deg,var(--bg2),#0b1025);padding:clamp(18px,3vw,34px);border-radius:18px;box-shadow:0 18px 50px #0006}
+.activity-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--cy);font-family:var(--px);font-size:10px;margin:8px 0 16px}
+.activity-mark{font:10px var(--px);letter-spacing:2px;color:var(--yel)}
+.activity-resources{display:grid;gap:10px;margin:22px 0;padding:16px;border:1px solid var(--ln);border-radius:12px;background:#080d1c}
+.activity-resources .lk{width:max-content;max-width:100%}
+.activity-complete{margin-top:24px;padding-top:18px;border-top:1px solid var(--ln)}
+.deck-head a{display:none!important}
+.deck-frame{width:100%;min-height:min(78vh,820px)}
+.deck-frame iframe{width:100%;height:min(78vh,820px);min-height:560px;border:1px solid var(--ln);border-radius:12px;background:#080d1c}
+.deck-finish{display:flex;justify-content:flex-end;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0 22px}
+.groups-entry{margin:18px 0}
+.groups-empty{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:20px}
+.group-empty-card{min-height:130px;border:1px dashed var(--ln);border-radius:12px;background:#10172d;display:grid;place-items:center;color:var(--mu);font-family:var(--px);font-size:10px}
+
+/* v8: modal, grupos, painel dos chefes */
+.mo{position:fixed;inset:0;z-index:70;background:rgba(5,8,25,.82);display:grid;place-items:center;padding:3vh 3vw;backdrop-filter:blur(6px)}.mo[hidden]{display:none}
+.mb{position:relative;width:min(860px,100%);max-height:90vh;overflow:auto;padding:clamp(22px,4vw,44px);border:1px solid rgba(155,173,255,.3);border-radius:18px;background:linear-gradient(145deg,#18203f,#090d1b);box-shadow:0 30px 90px #000a;animation:inn .3s}
+.mb h2.mh2{font:800 clamp(22px,4vw,34px)/1.2 Inter,sans-serif;margin:8px 0 14px;color:#f1f4ff}.mb p,.mb li{color:#b6c0da;line-height:1.7}.mx{position:absolute;top:14px;right:14px}.mb .lk{margin:4px 8px 4px 0}
+.in{width:100%;margin:6px 0;padding:11px 12px;border-radius:8px;border:1px solid var(--ln);background:#0a1028;color:var(--tx);font:inherit}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:80;background:#111a40;border:1px solid var(--cy);padding:12px 18px;border-radius:10px}
+.groups-cta{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin:22px 5px;padding:clamp(20px,3vw,34px);border:1px solid rgba(140,158,255,.5);border-radius:16px;background:linear-gradient(115deg,rgba(47,107,255,.28),rgba(139,92,246,.2));box-shadow:0 0 40px rgba(80,110,255,.18)}
+.groups-cta small{font-size:10px;letter-spacing:.2em;color:#9aaaff}.groups-cta h2{font:800 clamp(20px,3vw,28px) Inter,sans-serif;color:#fff;margin:6px 0}.groups-cta p{margin:0;color:#b6c0da;max-width:520px}
+.final-button.big{font-size:15px;padding:22px 38px;animation:ctaBreath 2.4s ease-in-out infinite}
+.ggrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin:0 5px}.gcard{padding:24px;text-align:center}.gcard h3{font:700 16px Inter,sans-serif;margin:8px 0 16px;color:#fff}
+.ph.lg{width:96px;height:96px;font-size:40px;border-color:var(--cy)}
+.tw{overflow-x:auto}.tb{width:100%;border-collapse:collapse;font-size:13px}.tb th,.tb td{padding:8px 10px;border-bottom:1px solid var(--ln);text-align:left}.tb tr.warn td{color:var(--yel)}
+.qr{display:inline-block;background:#fff;padding:12px;border-radius:10px;margin:12px 0}
+.gpick{display:flex;align-items:center;gap:14px;cursor:pointer;margin:10px 0}.mrow{display:flex;gap:10px;align-items:center;margin:8px 0}.mrow .in{margin:0}.mrow .ph{margin:0;cursor:pointer;flex:none;width:56px;height:56px}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script></head><body>
+<div id="ca">
+<header class="hud box" id="hud">
+ <span class="px">CODE ARCADE</span>
+ <div class="xpw"><div class="bar xp" aria-label="Barra de XP"><i id="hx"></i></div></div>
+ <span class="px" id="hxt" style="color:var(--yel)">0 XP</span>
+ <span id="hrk" style="color:var(--cy)"></span>
+ <button class="ib" data-a="sel" title="Voltar à seleção de fases">🗺️ Fases</button>
+ <button class="ib" data-a="admin" title="Área dos chefes">🔒 Chefes</button>
+</header>
+<main id="view" aria-live="polite"></main>
+<footer class="note" style="margin:30px 5px 10px">💾 O progresso é salvo apenas neste navegador e neste dispositivo (armazenamento local). Não é enviado a nenhum servidor. <button class="ib" data-a="reset">Reiniciar progresso</button></footer>
+</div>
+<div id="vic" hidden role="dialog" aria-modal="true" aria-label="Fase concluída"></div>
+<div id="mo" class="mo" hidden role="dialog" aria-modal="true"></div>
+<script>
+//BEGIN-ENGINE
+const W='https://wiki.setic.ro.gov.br/',LOGIN='https://documentos.sistemas.ro.gov.br/login',GLPI='https://atendimento.setic.ro.gov.br/index.php?redirect=%2FServiceCatalog%3F&noAUTO=1';
+const lk=(l,u)=>[l,u];
+const L=[
+{n:1,t:'O Portal se Abre',sub:'Chegada ao Reino Digital',dur:'1ª semana',ic:'🚪',bonus:150,
+ obj:'Introduzir o servidor ao serviço público, à SETIC e à missão de transformação digital.',
+ win:'Parabéns! Você finalizou o Nível 1: conclusão de cursos.',
+ m:[{i:'📖',t:'Ler a história da SETIC e sua missão',a:['hist','Abrir a história da SETIC'],k:[lk('Ler o Código de Ética da SETIC (PDF)','http://ditel.casacivil.ro.gov.br/COTEL/livros/Files/DEC20786%20-%20COMPILADO.pdf')]},
+  {i:'🎓',t:'Concluir os cursos: PSI, LGPD, Redação Oficial, SEI',subs:[
+   ['PSI',100,[lk('Abrir o curso de PSI na Escola de Governo','https://ava.escoladegoverno.ro.gov.br/course/view.php?id=3')]],
+   ['LGPD',100,[lk('Abrir o curso de LGPD na Escola de Governo','https://ava.escoladegoverno.ro.gov.br/course/view.php?id=10')]],
+   ['Redação Oficial',100,[],'Link do curso a ser informado.'],
+   ['SEI',100,[lk('Abrir o curso SEI USAR 4.0 na Escola Virtual','https://www.escolavirtual.gov.br/curso/1052')]]]},
+  {i:'🔑',t:'Solicitar acesso ao PRM junto à SUCSEPI',x:50,nt:'Fale com o seu gerente para solicitar o cartão de acesso às catracas da SETIC. Só entra com este cartão.',p:['cortez']},
+  {i:'📜',t:'Validar os dados junto ao RH para entrar em folha',nt:'Obrigatório ao ingressar na SETIC: valide os dados cadastrados junto ao RH.',p:['jorge','rebeca']},
+  {i:'📌',t:'Conhecer os canais institucionais e quem procurar em caso de dúvidas',a:['canais','Abrir os canais de comunicação']},
+  {i:'🏢',t:'Visitar o DataCenter',nt:'Fale com o seu chefe imediato para fazer o tour pela SETIC e visitar nossos data centers.'}],
+ badge:'Cidadão do Reino do PRM',npc:'Um guardião da SETIC (pode ser um colega da UA ou um membro da ASSES)',
+ xp:'+100 por curso, +50 por acessar o PRM, +150 ao concluir o nível',
+ say:'Olá, aventureiro! Sua jornada pela CODE começa agora. Prepare-se para conhecer nossa guilda e descobrir como contribuímos para a transformação digital!'},
+{n:2,t:'Primeiros Passos na CODE',sub:'Conectando-se à Guilda',dur:'Semana 2',fl:'Duas semaninhas e já poderá vestir a camisa da CODE com orgulho!',ic:'🏛️',bonus:200,
+ obj:'Conhecer a cultura, os valores, rituais, ferramentas e metodologias aplicadas na CODE: tudo o que você precisa para começar bem os trabalhos nas Gerências.',
+ win:'Parabéns por chegar ao fim do Nível 2! Você será agraciado com o badge «Aliado da Guilda CODE».',
+ m:[{i:'📚',t:'Explorar a Wiki da CODE',x:75,k:[lk('Explorar a Wiki da CODE',W+'pt-br/home/spaces/code')]},
+  {i:'🏛️',t:'Entender a estrutura da CODE e de suas gerências',x:75,nt:'Entenda como estão estruturadas as gerências da CODE.',k:[lk('Ver o organograma',W+'home/spaces/code/estrutura-organizacional')]},
+  {i:'💡',t:'Estudar DoD, DoR e a Cultura Ágil da CODE',x:75,k:[lk('Abrir o curso de DoD na Escola de Governo','https://ava.escoladegoverno.ro.gov.br/course/view.php?id=23')]},
+  {i:'🎓',t:'Concluir o curso de SCRUM, GLPI e Jira',x:75,k:[lk('Ler o Guia do SCRUM (PDF)','https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-PortugueseBR-3.0.pdf')]},
+  {i:'🔗',t:'Entrar nos canais: Jira, Wiki, Discord ou GLPI',x:75,nt:'Jira: é obrigatório pedir o acesso ao seu Scrum Master ou chefe. Discord: integração com o seu time, inclusive quem está de home office.',k:[lk('Abrir o Jira','https://setic.atlassian.net/jira'),lk('Abrir o GLPI','https://atendimento.setic.ro.gov.br')]},
+  {i:'📝',t:'Fazer uma simulação de abertura de tarefa ou backlog',x:75}],
+ badge:'Aliado da Guilda CODE',npc:'Um facilitador da CODE (líder técnico, Scrum Master, PO ou membro da ASSES)',
+ xp:'+75 por missão, +200 ao concluir o nível',
+ say:'Relaxa! Um Scrum Master ou um assessor vai te auxiliar nesta jornada. Aqui você entende o que isso significa.'},
+{n:3,t:'Explorador(a) de Territórios',sub:'Imersão na UA',dur:'Semanas 3–4',ic:'🧭',bonus:200,m:[],
+ obj:'Compreender a missão, equipe e rotinas da UA onde atuará.',badge:'Cartógrafo de UA',npc:'Seu gestor direto',
+ xp:'+200 ao concluir o nível (XP por missão a definir)',say:'Selecione sua gerência para acessar as missões, materiais e ferramentas específicas do seu território.',
+ tr:{
+ asdes:{g:'ASDES',ic:'🗂️',slides:'https://www.canva.com/design/DAG1sInyH_k/VCTTRUNezB1xclIWtBJKfA/view?embed',slideTitle:'Onboarding N3 — ASDES',t:'Conhecendo os fluxos da Assessoria',sub:'Aprendendo o que deve fazer pra aprender',dur:'Duas semaninhas e já saberá o que a ASDES faz!',
+  obj:'Compreender o papel da ASDES dentro da SETIC e dominar os fluxos básicos de atendimento, apoio e documentação das atividades da assessoria.',
+  badge:'Explorador da Assessoria',npc:'Um assessor',say:'Um assessor vai te acompanhar nessa jornada!',
+  win:'Parabéns por chegar ao fim do Nível 3! Você concluiu a integração e conhece os fluxos da ASDES.',
+  m:[{i:'📋',t:'Serviços',nt:'Conheça nossa carta de serviços e como eles são executados.'},
+   {i:'🧑‍💼',t:'Suporte ao coordenador',nt:'Do que o chefe precisa (pra ontem)?'},
+   {i:'🤝',t:'Suporte às gerências',nt:'As interações ASDES x gerência.'},
+   {i:'📑',t:'Atividade de ofício',nt:'O que fazemos enquanto ASDES?',k:[lk('Ver as atividades da ASDES',W+'home/spaces/code/gc/competencias/organizacional/ASDES')]},
+   {i:'🎯',t:'Planejamento Estratégico',nt:'O que é? Como estamos envolvidos?',k:[lk('Conhecer o planejamento estratégico',W+'pt-br/home/spaces/code/gc/compliance')]},
+   {i:'📅',t:'Data de capacitação',nt:'Conheça o plano de capacitação da gestão da CODE.',k:[lk('Ver o plano de capacitação',W+'home/spaces/code/gc/pac/gestao_2025')]}]},
+ gdev:{g:'GDEV',ic:'💻',slides:'https://www.canva.com/design/DAHTTkRRn78/-FNwwOPAU8cIfqJQqzZQ5A/view?embed',slideTitle:'Onboarding GDEV — Nível 3',t:'Missão: Conhecimento é Poder',sub:'How to play?',dur:'A definir',
+  obj:'Fortalecer sua base em lógica, C# e SQL, acumulando conhecimento e se preparando para os próximos desafios do onboard. Ao concluir os cursos e as provas, você estará mais perto de desbloquear o próximo nível.',
+  badge:'Cartógrafo de UA',npc:'Seu gestor direto',say:'Are you ready? Agora você faz parte do nosso time! Start level 3.',
+  win:'Parabéns por chegar ao fim do Nível 3!',
+  m:[{i:'🧩',t:'Curso de Lógica Computacional e Algoritmos',k:[lk('Acessar o curso de lógica','https://www.udemy.com/course/curso-gratuito-de-logica-de-programacao/')]},
+   {i:'🟣',t:'Curso de Fundamentos de C#',k:[lk('Acessar o curso de C#','https://drive.google.com/drive/folders/10NkUjHYRKq8JDCkQ1kLUQertsVzgmAkU')]},
+   {i:'🗄️',t:'Curso de SQL para Desenvolvedores',k:[lk('Acessar o curso de SQL','https://drive.google.com/drive/folders/1rciGsLJwgLkbQgF914CUS7CvnZzQV5Z1')]},
+   {i:'🏠',t:'Missão secundária: tá de teletrabalho?',nt:'Solicite acesso à VPN ao seu chefe imediato.'}]},
+ gta:{g:'GTA',ic:'🧰',slides:'https://www.canva.com/design/DAGz51ZoQ2A/dp2ieMCjsopwpCsUGJhd5g/view?embed',slideTitle:'Onboarding N3 — GTA',t:'Ferramentas do Scrum Master',sub:'Sua mochila ágil',dur:'A definir',
+  obj:'Conhecer as ferramentas utilizadas na SETIC, preparar seu ambiente de trabalho e encarar seu primeiro desafio compartilhando conhecimento e experiências no Café com Scrum! Um bom Scrum Master precisa conhecer bem seu kit de ferramentas.',
+  badge:'Cartógrafo de UA',npc:'Seu gestor direto',say:'Essa fase garante que você terá tudo o que precisa na sua mochila ágil.',
+  win:'Parabéns por chegar ao fim do Nível 3!',
+  m:[{i:'🖥️',t:'Conheça nossos sistemas',nt:'Visão geral dos sistemas desenvolvidos e mantidos pela SETIC.',k:[lk('Ver os sistemas da SETIC',W+'home/spaces/code/migration')]},
+   {i:'📋',t:'Acesse o Jira e Boards de tarefas',nt:'Instruções para entrar no board do seu time, visualizar e criar tarefas.',k:[lk('Ver as configurações do Jira',W+'home/spaces/code/gc/jira/jira_configuracoes_atuais')]},
+   {i:'🔀',t:'Mapeie o fluxo de trabalho do time',nt:'Veja como a história nasce e chega à produção.',k:[lk('Ver o fluxo de trabalho',W+'pt-br/home/spaces/code/gc/fluxo/jira')]},
+   {i:'🎓',t:'Curso de Scrum no Contexto do Serviço Público',nt:'Prepara servidores públicos para aplicar o Scrum no gerenciamento de projetos e na execução de ações públicas.',k:[lk('Abrir o curso na Escola Virtual','https://www.escolavirtual.gov.br/curso/395')]},
+   {i:'🌱',t:'Curso de Cultura Organizacional Ágil Aplicada ao Contexto Público',nt:'Elaborado pela GTA: aprenda como funciona a agilidade na prática.',k:[lk('Abrir o curso na Escola Virtual','https://www.escolavirtual.gov.br/curso/525')]},
+   {i:'📖',t:'Estude a cultura',nt:'Saiba como colaborar e crescer juntos.',k:[lk('Ler sobre rituais e cerimônias',W+'pt-br/home/spaces/code/gc/cultura/rituais-e-cerimonias')]},
+   {i:'📅',t:'Peça ao seu gestor o acesso às agendas dos times'},
+   {i:'💬',t:'Faça seu feedback com o gestor',nt:'Conte como foi passar do terceiro nível.'}]},
+ gux:{g:'GUX',ic:'✨',wikiRef:'https://wiki.setic.ro.gov.br/home/spaces/code/gc/cultura/onboarding/gux/nivel3',t:'Acessos e ferramentas da GUX',sub:'Sua jornada na gestão de produtos',dur:'A definir',
+  obj:'Antes de iniciar efetivamente sua jornada na GUX, conclua os acessos necessários e conheça os canais, ferramentas e rotinas utilizados pelos Product Owners.',
+  badge:'Cartógrafo de UA',npc:'Seu gestor direto',say:'Você está iniciando sua jornada na gestão de produtos. Explore os materiais, solicite seus acessos e conte com o time sempre que precisar.',
+  win:'Parabéns! Você concluiu as missões de integração da GUX e está preparado(a) para iniciar sua jornada na gestão de produtos.',
+  m:[
+   {i:'💬',t:'Missão 1 — Canais de Comunicação',nt:'Conecte-se aos canais utilizados pelos times e leia o Guia de Boas Práticas nos Canais de Comunicação. Acompanhe avisos, alinhamentos, convites para eventos e trocas de conhecimento.',subs:[
+    ['Grupo WhatsApp — CODE',0,[]],['Grupo WhatsApp — GUX',0,[]],['Grupo WhatsApp — Avisos CODE',0,[]],['Discord da CODE',0,[]]
+   ]},
+   {i:'📧',t:'Missão 2 — E-mail institucional',nt:'Valide seu acesso ao webmail Zimbra. Caso ainda não possua e-mail institucional, procure um Scrum Master e solicite a criação.',k:[lk('Acessar Zimbra — Webmail SETIC','https://webmail.setic.ro.gov.br')]},
+   {i:'🗓️',t:'Conta no Google Workspace',nt:'Com o e-mail institucional ativo, procure um assessor da coordenadoria para habilitar sua conta e obter acesso ao Google Agenda, Google Docs e integrações de eventos.'},
+   {i:'🔐',t:'Missão 3 — Acesso Geral',nt:'Acesse o manual completo e siga as orientações para solicitar os acessos institucionais. Em caso de dúvidas, consulte sua supervisão ou chefe imediato.',k:[lk('Abrir Manual de Acesso Geral','https://wiki.setic.ro.gov.br/home/spaces/code/gc/cultura/onboarding/gux/nivel3')]},
+   {i:'📊',t:'Missão 4 — Metabase',nt:'Solicite acesso ao chefe imediato. É necessário possuir e-mail institucional ativo. Utilize a ferramenta para elaborar indicadores de produtos, analisar dados de uso e apoiar investigações e decisões.',k:[lk('Acessar Metabase — CODE','https://metabase.sistemas.ro.gov.br')]},
+   {i:'📌',t:'Relatório das missões — validar acessos',nt:'Ao final, confirme que possui acesso aos grupos de WhatsApp CODE, GUX e Avisos CODE; Discord da CODE; e-mail institucional (Zimbra); Portal do Servidor; SEI; GLPI; Metabase; e Jira.',subs:[
+    ['Grupos WhatsApp: CODE, GUX e Avisos CODE',0,[]],['Discord da CODE',0,[]],['E-mail institucional (Zimbra)',0,[]],['Portal do Servidor',0,[]],['SEI — Sistema Eletrônico de Informações',0,[]],['GLPI',0,[]],['Metabase',0,[]],['Jira',0,[]]
+   ]},
+   {i:'🕘',t:'Rotinas essenciais do dia a dia',nt:'Incorpore à sua rotina diária: consultar a agenda (Google Agenda/Zimbra), verificar o e-mail institucional, acompanhar o SEI e monitorar o GLPI.',subs:[
+    ['Consultar a agenda diariamente',0,[]],['Verificar o e-mail institucional',0,[]],['Acompanhar o SEI',0,[]],['Monitorar o GLPI',0,[]]
+   ]}
+  ]}}
+},
+{n:4,t:'Missões em Campo',sub:'Primeiras Contribuições',dur:'Mês 2',ic:'⚔️',bonus:300,
+ obj:'Executar atividades práticas com apoio da equipe, assumindo tarefas simples e aprendendo com os processos.',
+ m:[{i:'📦',t:'Entregar uma demanda simples de backlog',x:200},{i:'🔧',t:'Apoiar em atividades de sustentação',x:200},{i:'🔄',t:'Participar ativamente das cerimônias ágeis',x:200}],
+ badge:'Executor(a) Iniciado(a)',npc:'Um(a) técnico(a) mais experiente da equipe',xp:'+200 por missão, +300 ao concluir o nível',
+ say:'Chegou a hora de agir! Entregue sua primeira demanda com o apoio da equipe e aprenda com cada processo.'},
+{n:5,t:'Guardiões da Cultura',sub:'Protagonismo e Cooperação',dur:'A definir',ic:'🛡️',bonus:0,pend:true,
+ obj:'A definir.',m:[],badge:'Guardião da Cultura CODE',npc:'A definir',xp:'A definir',
+ say:'Você chegou à última fase! Em breve as missões de protagonismo e cooperação estarão disponíveis aqui.'}];
+const tasks=l=>{const k=l.key||l.n;if(l.g==='GDEV'&&l.slides)return[{id:`${k}.slides`,t:'Concluir apresentação GDEV',x:200}];return l.m.flatMap((m,i)=>m.subs?m.subs.map((s,j)=>({id:`${k}.${i}.${j}`,t:s[0],x:s[1]})):[{id:`${k}.${i}.0`,t:m.t,x:m.x||0}])};
+const lv=(S,n)=>{const l=L[n-1];return l.tr&&S.tr&&l.tr[S.tr]?{...l,...l.tr[S.tr],key:n+S.tr}:l};
+const fresh=()=>({xp:0,t:{},paid:{},h:[],tr:null,ts:{},me:null});
+function toggle(S,id,x){const on=!S.t[id];S.t[id]=on;let g=0;if(on&&!S.paid[id]){S.paid[id]=1;g=x;S.xp+=x}return g}
+function finish(S,l){const T=tasks(l);if(T.length&&T.every(k=>S.t[k.id])&&!S.paid['L'+l.n]){S.paid['L'+l.n]=1;S.xp+=l.bonus;return true}return false}
+const MAX=L.reduce((a,l)=>a+tasks(l).reduce((b,k)=>b+k.x,0)+l.bonus,0);
+//END-ENGINE
+const PH={"cortez": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCABoAGgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC9acRClmbCGpAnlxDtVW5fC4rBbGslZlOU81ATT5DUJNUSPBqnfaraWKkzy/MP4VGTTbu5maRbWwXzLx8YUDO0epqxb+BfOXzdSuGaZuSF5waltR3LjCUtjA/4TGHzSgtWKg8Hd/8AWq3beKbGdtpSWNu27GD+Nbp8C6aE5MjP2JOKyb/4fptP2S48vPZhnFL2kGN0Zo0YbiOeISRNlT+lDOKxtPtLzSpzbXnKN/q2B+Un0q+7kVXoQ01oyZmphNQF/ejeaBE2aKjBooA7LUgIo4yfQ1x19qEr6rHbwyFVXG4Dua6fxbdLbQ2/Us27AH4VyNhbv9pe+n7/AHB6n/Cin8JdX42akrY61Ull2ozccdPrUVxc5J5q1oEK6hqKRuMhQXI9cVRG7sdB4L0UW9tJdzL/AKRO2WJHKj0ro5IABxUtvF5MKqR74pz4PBNccndnoQ91JGe6AVDIgINXJk+ZQGFQzJkZHQ1BdzD1KxjuoXilXKsO3Ue4965KKW4S8lsZQhnhHQ8b17MK7uZTurlfEdkyanZ3qqBjMZb2PatqUtbHNXirXKrGUD5oT+BpsayM2XQIv908mnl29abvPc1ucpKAq9qKh8wCigDrNetUu2tXl5SMN8vr0rnNSlwTjgDoK6G9nU2qsT0zXH38xlchelENiqj94ozSEk4NdF8O5B/wkSo/8UTYz+BrnDDK33UY/QV6VoegWlvc2V5HF5M0HVoycSfLg7gaJyS0HTpuV2uhp6ndypI0cDRx/KS0j9Frz6/1HUorp2tvElvO2eUA/wD1iu/1TS4tQj8udC65zjPBPv61ht4Zi+0s0MKIXBDkdwevHSueM0jqlTchPD1zqV4yyXDxvEAcsBjJqHW9V1CzzHZwwyHnb5j4A+tdVp2nxWNuI0UYrm9e09Li7GVDbTnaeh+tSnrdmjh7uhzsFx4raQTH7Cy5yYxIDn246Vqa1cmXQ45ZYjFIZVG1v4TzmqMXhpYS8lvLLFKSMMDyuP55962r+xW80fy5nZfLYO7KOTgGtOZXRzuErWOONx6tUTXXvVZz6dO1RgEmumxy3LLXDN0opiQk0UAdFcyyXSW1vESWkbaAO/SvQtD8H6Tp8KveILm5wCQw+UH0rgfCZWXXLBnKhY9z5Y4AwOK7zx9dXNj4N1K6gLRzCMRqwHK7jtzn6Go8gk9SHxDrXh610e8/s/8As971V2JHC4ZkYnAJAPao9HuPtkdpeqcxPBkf73evF9Hh+zaNcTnhppsA+yL/AIv+ldh8OvErl4tEuVyqs7QyZ6A8lT+PIoqQ0v2NKFTlun1PUEbJqpeSeVwoyx7CplbaKx7vURbzEhDJOThVA4Fcdm9DuUktS2NQhilVLh5Q+Of3Z259M9KzL67glvAYnJbuMZ/lWdq91qtxFIITbxy8FEEgz+JrLP8Aa0M4nCI5B5gjkU5H09atRVtxuUuzsdbGgdA69+1T21it632ToswIY+gwc1kaJrEF67RAFJl+9Gwxg1vadr2kaJeF9W1C2tC6fuxM2N3POPyp04PmsY1ai5bo5nWvAq2yyNDuUKRzuyDnpXGXNjNZT+XKp9j616fq/i/wzqt/bxDW7ERQ/vmcyY3N/Cgz6dT9Frj9aZNW1jbZANCnAcc7veupXW5xXuZkNsWQNt4orSuLnT7CWCxeYPcySiIxpyyEjqw7D/GigLmDDqcWnwt5qOzSxlEKgHbyDk5+ldrP8VtOuEZJ7e6eNhh43t4nVh6EZrzvU48JCPr/AErOZMVpyoi50vinUbPULaG5sLOKzgkUlYY0CDO7k4HGTisTwrcLb+IrR2IALFcn3FWYdPvL+zghVPKVMjfKCARnPHr1rQt9HttKglmGZrpUysrDhT/sj+tUoXRPOkz0601COaNQ7YfH51EtpBeNIJ1ym445IzWJqFtNp+x0O6KWNZYmPRgQP1FS6Jr1sVkSZsYbr9a4Z02tj0KdVaXLt1YadZqFwgz0yOazWtbG7cpDJtYckLkEVs30lrOFb7+Bx71nsILRmmXG0j5j3pJOx0PES2voEOn29tcxTjmXODIfvNx39a85+JN/De+IIoUkBFvAEPPG4kk11F9rUmoXken6WC8svyrjj5v6V5vdGKS5drspvYkkv9fWt6MGndnBWmnohkcKnqa6rwjr8eivIsyPcwsAAoP+rI9Pw7Vz1vaWrDcscbD1HNaMUcaqAoAA7AVszBG/4m1221C4gl09fLkUbi4PzEjpkYyCKKxIbdf7RtpuxPlP9G6fkcfnRRZBc35NOtroIbmWRFTOFQDLfielOH2az+WwtFB/56MN7fmamZdyjHamRhjG65xhs4/z9K3SMbjmnzEp3Hcxx83XFMumaVCi5245oES5BZj+AzSgdfSmDR6F4Vgh1jwvbWd8pZVQeXIOqdutcP408OXXh+QTCUeVISElQZY8d1/qK6v4e6j5cEtmY2YxOSmO4POPbnNaupaTNq1yb04S6VdiIW4Cjnaf8awklc1hLXXY8fj1q8hiZWuY2P8ACCcU+OXWNVjwsZVAeZGO1B+f8q7a90+Igs8Ch1OGBHINS6Bo0V9K7TLKI/4SGJz9M9BUcup01IqC1YzwfpGn6RpF1qyzpdXaRuJJB/Ayjlcdj0rxVwZ7fEgzli30J619HQ6XZ6ctxDFDiKYiR8nJIAxz+VfPl6sTTTNbKywGRjEG6hcnGffFaQRxt3ZiQl45CYyykdwcVr215cFBna49SOfzrPSPM3tmtTT4Pl2nscVdhtl2O+2x4eM/gaKbLBtXpRRyoLs7WLkHNLbgNI6kdV/lRRVozEkQjmo3BoopgbPg+58jWQDwJEx+I/8ArE16aAHUMDhwMZ9fY0UVjL4ilscpq6rNd3B2sC/Bwe4FX/D19E1qINgSWEYZQMbu2RRRWd9TvqQTop9i81u11HcqP9Y8LjI7EqQP5183XEZjRVOQQMGiitYnAQpAc5IrU06HMrZ7gH/P5UUVaAvXcHycCiiimI//2Q==", "rebeca": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCABoAGgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDzylpmaM0xDqs2Wn3N82IEG3vI52qPxrW0PQVnKS6izRo3KxAfMw65PoK3baKa6hIt7cRwudisvAVc9s8DIrCpWSdkbQpX1ZzCaMqRPLMssgXjKjaucev5VvaPoVo9ob2S2ijhA+R5AH3N9DyfyxSTCS+lMKxJFDA/l+ZnO5R1z9a0XnFotnb3Ns4hV/kBPBx0rKVSTW5ooK+hWupdNFpI5itkkKGMQPbqGL5+8MDisvQ/Cx1CfM0IZDyecD8MV0Fpp8Wsaitx5bKg+XOMZHqB2Fd9pljb2ygRxqoHpSjJ7I09mt2ee6l8Lozbebp91JFNjPly/Mp/HqP1rzq/sbiwuHguYyrocGvpeRlIIrzD4naYPLGowjlPlcDjINaxqNOzM50k1dHltFX1sXuEYwRt5qZLRqMggc5B+naqNdCdzmasJRS0UCLFbnhywjZ2v7yPdbwjcqkcO1ZNvA1xMsaAkn+Vd5p8UUOlhpFU7Rwg/hA9iKxrT5VZG1KF3qV5pHfzpIAWeWRVjBbgkkevQDGKWWS4IgsnJ8twWkHKhSpIyPX2+pqrHA91cQwy/OJAdoVT8zDkBj2Gfp1zV2zkEdxICXmBkOJGbIIGBj6DoPYVxnUaKW8HkGMTgTKmSmNoPpjJFZ2p3CpcRRXxMcgYl2HIcHkHHY/StbUYQklnchIpbmZ2VEG7aAB0Oe+c1kiSC41GeO4e1jkLkMrzY578GriuYWx2Xh42AgXyJkPHY1vqyYG0g15abBbS5321wYG7YPyH6EV2OlTz/Y98rElV5PrTsomivI6I4IOK5vxTD52nXURXcDG2Ae5xWPc+Kb9Lpo7aBHXPBL4qzJq91NZub6zCRlceYjA7eO/tQ1fVCulocL4LMbRlmgmkdANoTGRyf5ml8ZaKIXOo28aIrn99CnSMkZB9uvPvVPwnvjkMwheVWZtg52YBzkgdTkjiu1htjqOlm5kVna4y828Y5wBt/DJ/KteblkcrjeJ5XiireqWZsb2W3PIU5U+qnpRXSc5reG2MV5vAUs2FywzgdzXWz3sYDW0YaSRhgbV4z7Hv0FYvh6wSS3hkEb+buLBwSO/Fal1cPZXUjSEtGCBszggkdf0riryTm1c7KUWo3aK4877SlqkgjSCMy3ikggY/h457+p5q1oypd4e7BMceCPKIUbR0HTGPWsyzzb6pqGoIJJYREVMi9Nzdjx71seHLgxJieBZI53EYccBQR3+uOtZPYs0vNnLXC6dhgh2GQgMFDddgPY+vtXMXXgee5neQu43yFy/fJ+tdPYyR26qiIFlK7GOewPHHrx1roYrgNEN6j8DVQk47GjpqS1RyEOgizg27j5SoAV9MfxfWujsIQdFl2O44O3n5fxFQXUpuZikQ2xKQHbP8q3rUQ/2a8aldpGMVSk5PUbhZHmN7q15o14ix6T58THAIYgH8vX3NTnXXuLe+eG3mhWKJzIjNvQEDsf6V29vp9tcwiKVFLIduMVT8S2Fta+GtRjQAZt5CB/wE1pzq2xlyvueZeF78SwHzIbN1wQxB8sLxnkdB06/Su2MU4t4m8xSVddzPIQcNyF/Xn2+tct4Vt4102GyfEcszgjIIAU88kdM44zW4629tcu8kjShhuAIPyggcn1PapqNcxnBaHPeNbPa0dwMZDFG29OeR+uaK2PFqJNpUjR5KAB0JGD1B59DjtRXbSXNG5yz0kb3gPY2lWySCMgAgZXBHJ71V8YWvl6owY27InzDnKqMdcetZfhHUGhssKfuFh/X+tWtSkW4BfzQ+W5U55Pv9K8qpR5MTOXmejGfNSivIzGLWugTyJdJMtwxWRCu0qPp+R5qzZTTu9jKtysTSssRUlT8o6CsvWr0RWi26LLumOFBPynJ6hevGK04blbOO3ljs28xg0jHGccdh6nP5VdmRdGtfSNHfFCGxGSvzcc9TWtYzCVOThfeuP0zV4dTmmkUYCPtClskDtWreQTz2omtJzE8XzBcZDfWpSadjpg7x0LOtaXPcyH7JdSQocEiNsVWj/teGIxJJlvuhsfrVa0n1S5GUuopGHVS5TFXUu9bgAY26le4V0IP1rdQZo6bsbtqZbaKM3Mm99g3HbjJrF8a6sLfQ7gxttklxGnOeT/8AWzVhLm8vFdrm3ECkApht1cF40vRPfR2qtvWA4K56sf8ADipV72Oeo0omlodpPPobXFvJF5vnFZ5JZMyDJ+Uc8AH1rprtL4pDJJEEjSNoHMxz5uOSQfU4Hb0rC8O2cNz4YmEHF7IjKvmcAgdl7VtaDbPeabGtwjLKUHzByCqkYAxnDe+B1qZPUwWxmeIpkn0+aRUZB5OMMME++O1FJ4scroiC5jEcxwiYJ+ZQcUV6eEa9mclZe8chpWovaS7QRtcjOc8H8K657tWj2W6rNJuG5QM5H1/OvPdxUgjqK63wzdrNBJF5ZDKMoykZYYxiubERv7xrRlb3SRjbalr1osjuinIJJ+6AKfqoaykumtpy6ylRBHksztkc47Y5+uaintQt3CIvlZfkVi3t79frVrxA6Wt1p5SNnSF/NabPDsBzjjpwBx+tcvU3exyupSXHh7WhO0XliUAywqeDzyR6c13uhXsN9bK8L5VhXC+Nhb3Nwl/ayNJFOpKliSVx1HPTGaZ4SvZYVQwvhx2PQ1c43imOlO0rHpMnhxbhzLbzmJz1x3p8Phy5Vw1xds8Q6qOM1nW3iCUoA8Lqw7qaXUPFUkNoVhjZpCMAt0FJN2sdLnpoxfFOtfYVWCEgzEbUQdvc+1cjbrHFayXDh2mZj8xUBhxycn19evSprqJjbLe3N1EHkfcUOfMfHv0Aq7ZW0626Rh4py82YRuO5M/eJHp0/HpQtEcsm5M2Eea00aQRSrbuzBog6Z3KcYXOD29e9WtCk/wBFhhlaOZhukOW6HP5jtxTNceOz0u3lid5cJtbJPy46cdaqWl6NPZ7q6CmKG3EjqcIZFfn5SByc1m02hp6mT49vV822sUcvsBlc59eg/LP50Vyl9eSX15LczffkbOPQdh+A4or0qS5IKJxVJc0myAmruk6hJZXMZEhSIuC+BnjvVCihq6sJOzud49rFcapbNHLG8LqAGJwoHXJb09cUupb7SOSW2MzzRucSnG0r04U/wnJ/KuW0bWZNOYpKnnW7KVKH+HI6j/Ct2G6i1O3m24ldUGwOTkbe34jNcU6cou/Q64zjJHO+JNRe4sEWZU3bztKjAx7Vn6JIy7dpww6fWk10eZcAKzFAvCk5xVXT5DC6n06j1rrjRvTMPaWmd/aTtPCHVef4hRJbSzyKu3r0FRaM4XZLGd0MnBx2NbFxG0JDgZPoe4rias7HcveVzJuoGuLQW0mwi3BZpN4AU/wqPc8/pWz4cX54GYMA/wAifdJDD+96rg/zqrPZbZiZB5ZWYeYchgSQONnQ8VbeSx0gxTXJVbeTJLqpBYMOdo/TApb6GTVtR2syRsFhRxAsZC7nJwoA647dfrXE67qn22RYIJXe2hAVWfrJjoT/AEpNd1qTUrmTyi6QNxg8FwOhP+FZNdVKly6s56lS+iFopKK3MQooooAKdFI8T74nZG9VODRRSAW4le5YNMckdwAKqmDDZVhRRVxm4qyE1d3NLTb+axcPEwU9weQ31FdHL4rt5YF3wSecOoXG38zRRUVEqmrRpCcoaJmZc+I7iRWWCCGIli3mYJc8Y57dPaseaaWdg00jyEDALNnA9B6CiilGMY7IUpOW4yiiiqJCiiigD//Z"};
+const PE={cortez:['Cortez','Procure para o PRM'],jorge:['Jorge Luiz','Gerente do RH'],rebeca:['Rebeca','RH']};
+const CAN=[['Para todos','Alguns acessos dependem do escopo em que o servidor trabalha.',[
+ ['📧','E-mail Corporativo','Zimbra, a plataforma de e-mail disponibilizada pela SETIC para as secretarias.',[['Solicitar acesso','https://atendimento.setic.ro.gov.br/plugins/formcreator/front/formdisplay.php?id=1'],['Manual do Zimbra',W+'home/base_conhecimento/manuais/sistemas/zimbra']]],
+ ['📄','SEI','Sistema Eletrônico de Informações do Governo do Estado de Rondônia. Sem manual.',[['Acessar o SEI',LOGIN]]],
+ ['🛠️','GLPI','Sistema de atendimento de chamados de TI. Sem manual. Não precisa solicitar acesso: o perfil é ativado no primeiro login.',[['Abrir o GLPI',GLPI]]],
+ ['🧑‍💼','Portal do Servidor','Portal centralizador de informações exclusivo para o servidor. Perfil ativado no primeiro login.',[['Acessar o portal',LOGIN]]],
+ ['📝','Atualização Cadastral','Atualização dos dados cadastrais dos servidores do Estado de Rondônia.',[['Ver o manual',W+'home/base_conhecimento/manuais/sei']]],
+ ['🏛️','Portal do Cidadão','Portal centralizador de serviços do Estado. O acesso é feito com a conta Gov.br.',[['Acessar o portal',LOGIN]]]]],
+ ['Chefe imediato','O RH da sua unidade precisa cadastrar você como chefe do departamento no e-Estado para que estes sistemas reconheçam seu perfil.',[
+ ['🏖️','SID','Sistema Integrado de Descanso, para gerenciamento de férias.',[['Acessar o SID',LOGIN]]],
+ ['⏱️','SIF','Sistema Integrado de Frequência.',[['Acessar o SIF',LOGIN]]],
+ ['🛡️','Guardião da Frequência','Sistema para sincronização de frequência dos servidores.',[['Acessar o sistema',LOGIN]]],
+ ['🗓️','SKALA','Sistema Estadual de Gestão de Plantonistas.',[['Acessar o SKALA',LOGIN]]]]],
+ ['RH','',[['👥','e-Estado – Módulo de RH','Sistema de Gestão Integrada do Governo do Estado de Rondônia.',[['Solicitar acesso','https://atendimento.setic.ro.gov.br/plugins/formcreator/front/formdisplay.php?id=123']]]]]];
+const HIST=[];
+const $=s=>document.querySelector(s),KEY='codeArcade.v1';
+const sprite=(rows,p)=>`<svg class="sp" viewBox="0 0 ${rows[0].length} ${rows.length}" shape-rendering="crispEdges" aria-hidden="true">${rows.map((r,y)=>[...r].map((c,x)=>p[c]?`<rect x="${x}" y="${y}" width="1.02" height="1.02" fill="${p[c]}"/>`:'').join('')).join('')}</svg>`;
+const CH=['...hhhh...','..hhhhhh..','..ssssss..','..sesses..','..ssssss..','...ssss...','..bbbbbb..','.bbbbbbbb.','.sbbbbbbs.','..bb..bb..','..pp..pp..','..pp..pp..'];
+const MD=['..r...r..','..rr.rr..','...rrr...','..ggggg..','.gGGGGGg.','.gGyyyGg.','.gGyyyGg.','.gGGGGGg.','..ggggg..'];
+const NP=[['#7c3aed','#22d3ee'],['#f59e0b','#34d399'],['#111827','#8b5cf6'],['#b45309','#2f6bff'],['#e5e7eb','#fbbf24']];
+const BC=['#2f6bff','#22d3ee','#34d399','#f59e0b','#8b5cf6'];
+const npcS=n=>sprite(CH,{h:NP[n-1][0],s:'#f5c9a0',e:'#111',b:NP[n-1][1],p:'#2a3a6a'});
+const medS=n=>sprite(MD,{r:BC[n-1],g:'#6b4a06',G:'#fbbf24',y:'#fff3c4'}).replace('class="sp"','class="m"');
+const RANK=['Recruta','Aventureiro(a)','Aliado(a) da Guilda','Cartógrafo(a)','Executor(a)','Guardião(ã) da Cultura'];
+let S=(()=>{try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.t)return Object.assign(fresh(),s)}catch(e){}return fresh()})();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}reg()};
+let snd=false,ac;
+function beep(f=660,d=.09){if(!snd)return;try{ac=ac||new AudioContext();const o=ac.createOscillator(),g=ac.createGain();o.type='square';o.frequency.value=f;g.gain.value=.04;o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+const done=l=>!!S.paid['L'+l.n];
+const finalUnlocked=()=>L.slice(0,4).every(done);
+const st=l=>done(l)?'done':(l.n===5&&!finalUnlocked()?'lock':'open');
+const STX={done:'✓ CONCLUÍDA',open:'▶ ACESSAR FASE',lock:'🔒 CONCLUA AS FASES 1–4'};
+const prog=l=>{const T=tasks(l);return T.length?Math.round(T.filter(k=>S.t[k.id]).length/T.length*100):0};
+const bn=l=>lv(S,l.n).badge;
+let cur={v:'start'};
+function upd(){const c=L.filter(done).length;$('#hx').style.width=Math.min(100,S.xp/MAX*100)+'%';$('#hxt').textContent=S.xp+' XP';$('#hrk').textContent='Nível '+Math.min(5,c+1)+' · '+RANK[c];
+ const p=$('#pb');if(p){const l=lv(S,cur.n),q=prog(l);p.style.width=q+'%';$('#pt').textContent=q+'%';}}
+function go(v,n,from){cur={v,n:n||from||1,from};document.body.classList.toggle('start-screen',v==='start');document.body.classList.toggle('arcade-screen',v!=='start');const a=$('#view');a.innerHTML=v=='start'?start():v=='sel'?sel():v=='activity'?activity(n,from):v=='groups'?groups():v=='admin'?admin():v=='canais'?canais():v=='hist'?hist():(n==3&&!lv(S,3).key)?pick():lvl(n);a.classList.remove('in');void a.offsetWidth;a.classList.add('in');upd();scrollTo(0,0);if(v==='sel'&&!S.me&&!sessionStorage.getItem(SES))whoModal()}
+function start(){const c=Object.keys(S.paid).length;return`<section class="landing" aria-label="Abertura CODE ARCADE"><header class="landing-nav"><div class="brand-lock"><span class="brand-mark">✦</span><span>CODE <span style="color:#8797ff">/</span> SETIC</span></div><div class="nav-right"><span class="nav-status">SISTEMA ONLINE</span><span>ONBOARDING · 2026</span><button class="sound-toggle" data-a="admin">🔒 CHEFES</button></div></header><div class="landing-main"><div class="landing-copy"><div class="eyebrow">COORDENAÇÃO DE DESENVOLVIMENTO DE SISTEMAS</div><h1 class="landing-title">CODE <span>ARCADE.</span></h1><p class="landing-sub">Sua jornada começa aqui.</p><p class="landing-desc">Bem-vindo(a) à CODE. Entre na nossa guilda, conheça as pessoas, descubra como transformamos ideias em soluções digitais e prepare-se para fazer parte dessa jornada.</p><div class="start-actions"><button class="start-cta" data-a="sel"><span>[ ${c?'CONTINUAR':'PRESS START'} ]</span><span class="arrow">↗</span></button><span class="start-hint">Uma nova jornada está prestes a começar</span></div></div><div class="landing-art code-scene" aria-label="Ilustração de programação e desenvolvimento de software">
+<div class="art-glow"></div><div class="art-ring"></div><span class="art-cross"></span><span class="art-orb"></span>
+<div class="code-window"><div class="code-top"><span></span><span></span><span></span><small>code.arcade.js</small></div>
+<div class="code-lines"><i class="ln w70"></i><i class="ln w48 purple"></i><i class="ln w86"></i><i class="ln w58 cyan"></i><i class="ln w76"></i><i class="ln w42 purple"></i><i class="ln w68"></i><i class="ln w52 cyan"></i><i class="ln w82"></i></div>
+<div class="code-terminal"><b>›</b> build: <span>success</span><i class="cursor"></i></div></div>
+<div class="code-orbit orbit-a">{}</div><div class="code-orbit orbit-b">&lt;/&gt;</div><div class="code-orbit orbit-c">01</div>
+<span class="art-caption">DESENVOLVIMENTO · INOVAÇÃO · TRANSFORMAÇÃO</span></div></div><footer class="landing-foot"><span class="landing-index">01 / 05 <strong>INÍCIO DA JORNADA</strong></span><span class="foot-right">TRANSFORMANDO IDEIAS EM SOLUÇÕES DIGITAIS</span></footer></section>`}
+function sel(){const ready=L.slice(0,4).every(done);return`<section class="arcade-shell">
+ <div class="arcade-kicker">COORDENAÇÃO DE DESENVOLVIMENTO DE SISTEMAS · CODE / SETIC</div>
+ <div class="arcade-heading"><span class="arcade-heading-line"></span><h1>ARCADE<span>.</span></h1><span class="arcade-heading-line"></span></div>
+ <p class="arcade-lead">Escolha uma fase e explore sua jornada. Todas as fases estão disponíveis para consulta e realização.</p>
+ <div class="arcade-progress"><span>JORNADA DE INTEGRAÇÃO</span><b>${L.filter(done).length} / 5 FASES CONCLUÍDAS</b></div>
+ <div class="grid arcade-levels">${L.map(l=>{const v=lv(S,l.n);return`<button class="lv box st-${st(l)}" data-a="go" data-n="${l.n}" ${l.n===5&&!ready?'disabled aria-disabled="true"':''}><span class="n">FASE 0${l.n}</span><span class="ic">${l.ic}</span><h3>${l.t}</h3><small>${l.sub}</small><small>⏳ ${l.dur}</small><div class="bar"><i style="width:${prog(v)}%"></i></div><span class="chip">${done(l)?'✓ CONCLUÍDA':'▶ ACESSAR FASE'}</span></button>`}).join('')}</div>
+ <section class="final-gate"><div><small>ETAPA FINAL</small><h2>${ready?'JORNADA PRONTA PARA FINALIZAÇÃO':'DESBLOQUEIO DA ETAPA FINAL'}</h2><p>${ready?'As quatro primeiras fases foram concluídas. Você já pode seguir para a etapa final.':'Conclua todas as atividades das Fases 1 a 4 para liberar a finalização do onboarding.'}</p></div><button class="final-button" data-a="final" ${ready?'':'disabled'}>${ready?'ACESSAR ETAPA FINAL ↗':'FINALIZAÇÃO BLOQUEADA'}</button></section>
+ <section class="sec"><h2>MEDALHAS & CONQUISTAS</h2><div class="bg">${L.map(l=>`<div class="bd box ${done(l)?'':'lk'}">${medS(l.n)}<b>${bn(l)}</b>Condição: concluir a Fase ${l.n}<br><span style="color:${done(l)?'var(--grn)':'var(--mu)'}">${done(l)?'Conquistada':'Pendente'}</span></div>`).join('')}</div></section>
+ <section class="sec"><h2>HISTÓRICO DA JORNADA</h2><ul class="hist box">${S.h.length?S.h.slice(-8).reverse().map(x=>`<li>${x}</li>`).join(''):'<li>Suas conquistas aparecerão aqui conforme você concluir as atividades.</li>'}</ul></section></section>`}
+const ln=(l,u)=>`<button class="lk" data-a="ext" data-u="${btoa(u)}">🔗 ${l} ↗</button>`;
+const pp=id=>`<figure class="pp"><span class="ph">${PH[id]?`<img src="${PH[id]}" alt="${PE[id][0]}">`:PE[id][0][0]}</span>${PE[id][0]}<small>${PE[id][1]}</small></figure>`;
+const det=m=>'';
+const chk=(id,t,x,ic)=>{const d=!!S.t[id],I=taskInfo(parseInt(id),id),one=I.links.length===1&&!I.a;return`<div class="mission-card ${d?'mission-done':''}" data-a="task" data-id="${id}" style="cursor:pointer"><div class="mission-main"><span class="mission-icon">${d?'✓':(ic||'🎯')}</span><span class="mt">${t}</span><span class="xx">${d?'CONCLUÍDA':(x?'+'+x+' XP':'ATIVIDADE')}</span></div><div class="mission-actions">${d?'<span class="done-label">✓ Atividade concluída</span>':`<button class="mission-open" type="button">${one?'ABRIR LINK ↗':'ABRIR ↗'}</button>`}</div></div>`};
+function taskInfo(n,id){
+ const l=lv(S,n),parts=id.split('.'),i=+parts[parts.length-2],j=+parts[parts.length-1],m=l.m[i];
+ if(l.g==='GDEV'&&id.endsWith('.slides'))return {l,title:'Apresentação de onboarding — GDEV',description:'Assista à apresentação completa. Ao chegar ao último slide, retorne a esta área e confirme a conclusão para liberar a próxima etapa.',links:[],guidance:['Percorra todos os slides, na ordem apresentada.','Observe os materiais, referências e orientações que já estão incorporados à apresentação.','Ao terminar o último slide, clique em “Finalizar apresentação”.']};
+ if(id.endsWith('.wiki'))return {l,title:'Referência da Wiki GUX',description:'Consulte as orientações de onboarding da GUX.',links:l.wikiRef?[[ 'Abrir referência de onboarding da GUX', l.wikiRef ]]:[],guidance:['Use os materiais e orientações apresentados nesta fase.']};
+ if(!m)return {l,title:'Atividade',description:'Conclua a atividade indicada pela sua gerência.',links:[]};
+ if(m.subs){const sub=m.subs[j]||[];return {l,title:sub[0]||m.t,description:sub[3]||m.nt||'Realize esta atividade conforme a orientação da sua equipe.',links:sub[2]||m.k||[],guidance:[]};}
+ const essential={
+  'Entregar uma demanda simples de backlog':['Alinhe a tarefa com o responsável pelo backlog.','Confirme objetivo, critérios de aceite e prioridade antes de iniciar.','Implemente a solução em pequenas etapas, seguindo os padrões do time.','Solicite revisão e registre a entrega no fluxo combinado.'],
+  'Apoiar em atividades de sustentação':['Entenda o chamado e o impacto para o usuário.','Reproduza ou investigue o problema com apoio de alguém experiente.','Registre diagnóstico, solução aplicada e evidências.','Valide a correção antes de encerrar a atividade.'],
+  'Participar ativamente das cerimônias ágeis':['Participe das cerimônias previstas pelo time: planejamento, daily, review e retrospectiva.','Compartilhe impedimentos e atualizações de forma objetiva.','Contribua com estimativas, priorização e melhoria contínua.','Registre decisões e próximos passos nos canais definidos.']
+ };
+ return {l,title:m.t,description:m.nt||l.obj||'Realize esta atividade com acompanhamento da equipe.',links:m.k||[],guidance:essential[m.t]||[],people:m.p||[],a:m.a};
+}
+function activity(n,data){
+ const info=taskInfo(n,data.id),isDone=!!S.t[data.id],links=info.links.map(x=>ln(x[0],x[1])).join('');
+ const guidance=info.guidance?.length?`<div class="activity-resources"><b>PASSOS ESSENCIAIS</b><ol>${info.guidance.map(x=>`<li>${x}</li>`).join('')}</ol></div>`:'';
+ const people=info.people?.length?`<div class="activity-resources"><b>PESSOAS DE REFERÊNCIA</b>${info.people.map(pp).join('')}</div>`:'';
+ return `<section class="activity-page"><div class="activity-top"><span>CODE / SETIC</span><span>AMBIENTE DE MISSÃO · FASE 0${n}</span></div><div class="top"><button class="ib" data-a="backActivity">← Voltar à fase</button></div><div class="activity-panel">
+ <div class="activity-mark">MISSION BRIEFING</div><h1>${info.title}</h1><p>${info.description}</p>${guidance}
+ ${links?`<div class="activity-resources"><b>MATERIAIS E LINKS DE APOIO</b>${links}</div>`:''}${people}
+ <div class="activity-complete">${isDone?'<div class="done-label big">✓ ATIVIDADE CONCLUÍDA</div>':`<p>Quando concluir esta atividade, confirme abaixo para atualizar seu progresso.</p><button class="final-button" data-a="${data.id.endsWith('.slides')?'completeSlide':'completeTask'}" data-id="${data.id}" data-n="${n}">${data.id.endsWith('.slides')?'FINALIZAR APRESENTAÇÃO ✓':'CONCLUIR ATIVIDADE ✓'}</button>`}</div>
+ </div></section>`;
+}
+const getGroups=()=>jget(GROUPS_KEY,null)||GROUPS_BASE,setGroups=g=>{try{localStorage.setItem(GROUPS_KEY,JSON.stringify(g))}catch(e){toast('Sem espaço para salvar: use imagens menores.')}},isChef=()=>!!sessionStorage.getItem(SES);
+let gd=null;
+function groups(){const G=getGroups(),ch=isChef(),av=(s,t)=>s?`<img src="${s}" alt="">`:esc((t||'?')[0]);
+ return `<div class="top"><button class="ib" data-a="back">← Voltar à fase</button>${ch?'<span><button class="ib" data-a="admin">📊 Painel</button> <button class="ib" data-a="gExport">Copiar código dos grupos</button></span>':''}</div><section class="pn box"><h2>👥 Grupos da CODE</h2><div class="sb">Conheça os times e quem caminha com você</div>${ch?'<button class="final-button" data-a="gEdit" data-i="-1">+ ADICIONAR GRUPO</button>':''}</section>${G.length?`<div class="ggrid">${G.map((g,i)=>`<section class="gcard box"><span class="ph lg">${av(g.icone,g.nome)}</span><h3>${esc(g.nome)}</h3><div class="pps" style="justify-content:center">${(g.membros||[]).map(m=>`<figure class="pp"><span class="ph">${av(m.foto,m.nome)}</span>${esc(m.nome)}</figure>`).join('')}</div>${ch?`<div style="margin-top:14px"><button class="ib" data-a="gEdit" data-i="${i}">✎ Editar</button> <button class="ib" data-a="gDel" data-i="${i}">🗑 Excluir</button></div>`:''}</section>`).join('')}</div>`:'<section class="pn box"><p>Nenhum grupo cadastrado ainda.</p></section>'}`}
+function img2url(f,max,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.82))};im.src=r.result};r.readAsDataURL(f)}
+function gSync(){if(!gd)return;const m=$('#mo');gd.nome=m.querySelector('[data-k=gn]').value;m.querySelectorAll('[data-k=mn]').forEach(e=>{gd.membros[+e.dataset.i].nome=e.value})}
+function gRender(){openModal(`<div class="mb"><button class="ib mx" data-a="mclose">✕</button><div class="activity-mark">${gd.i<0?'NOVO GRUPO':'EDITAR GRUPO'}</div><h2 class="mh2">Dados do grupo</h2><input class="in" data-k="gn" placeholder="Nome do grupo" maxlength="40" value="${esc(gd.nome)}"><label class="gpick"><span class="ph lg">${gd.icone?`<img src="${gd.icone}" alt="">`:'🖼️'}</span><span>Imagem tema do grupo (opcional)</span><input type="file" accept="image/*" data-k="gi" hidden></label><h3 class="s" style="margin-top:20px">MEMBROS</h3>${gd.membros.map((m,i)=>`<div class="mrow"><label class="ph" title="Foto (opcional)">${m.foto?`<img src="${m.foto}" alt="">`:'📷'}<input type="file" accept="image/*" data-k="mf" data-i="${i}" hidden></label><input class="in" data-k="mn" data-i="${i}" placeholder="Nome do membro" maxlength="60" value="${esc(m.nome)}"><button class="ib" data-a="gMemDel" data-i="${i}">✕</button></div>`).join('')}<button class="ib" data-a="gMemAdd">+ Adicionar membro</button><div class="activity-complete"><button class="final-button" data-a="gSave">SALVAR GRUPO ✓</button></div></div>`,'edit')}
+$('#mo').addEventListener('change',e=>{const t=e.target,f=t.files&&t.files[0];if(!f||!gd)return;gSync();img2url(f,t.dataset.k==='gi'?240:160,u=>{if(t.dataset.k==='gi')gd.icone=u;else gd.membros[+t.dataset.i].foto=u;gRender()})});
+function pick(){const l=L[2];return`<div class="top"><button class="ib" data-a="sel">← Voltar às fases</button></div><section class="pn box"><h2>${l.ic} Nível 3 – ${l.t}</h2><div class="sb">${l.sub}</div><p>Selecione sua gerência para acessar as missões, materiais e ferramentas específicas do seu território.</p></section><div class="grid">${Object.entries(l.tr).map(([k,t])=>`<button class="lv box st-open" data-a="tr" data-k="${k}"><span class="ic">${t.ic}</span><h3>${t.g}</h3><small>${t.t}</small></button>`).join('')}</div>`}
+function lvl(n){const l=lv(S,n),k=l.key||n,isGdev=l.g==='GDEV';
+ const ms=isGdev?'':(l.m.length?l.m.map((m,i)=>m.subs?`<div class="mh">${m.i} ${m.t}</div><div class="subs">${m.subs.map((sub,j)=>chk(`${k}.${i}.${j}`,sub[0],sub[1])+det({k:sub[2],nt:sub[3]})).join('')}</div>`:chk(`${k}.${i}.0`,m.t,m.x||0,m.i)+det(m)).join(''):'<p>🚧 As missões desta fase ainda serão configuradas.</p>');
+  const deck=l.slides?`<section class="deck-wrap"><div class="deck-frame"><iframe src="${l.slides}" title="${l.slideTitle||'Apresentação de onboarding'}" loading="lazy" allowfullscreen></iframe></div></section>`:'';
+ const gdevActions=isGdev?`<section class="groups-cta"><div><small>NOVIDADE</small><h2>👥 Conheça os grupos do onboarding</h2><p>Veja os times, seus integrantes e descubra quem vai caminhar com você nessa jornada.</p></div><button class="final-button big" data-a="groups">ACESSAR GRUPOS →</button></section><div class="deck-finish"><span>Conclua a apresentação até o último slide para liberar a próxima etapa.</span><button class="final-button" data-a="openTask" data-id="${k}.slides">FINALIZAR APRESENTAÇÃO ↗</button></div>`:'';
+ const cols=isGdev?'':`<div class="cols"><section><h3 class="s">🎯 MISSÕES</h3>${ms}</section><aside><h3 class="s">🏅 RECOMPENSAS</h3><ul class="rw box" style="padding:14px"><li><b>Badge:</b> «${l.badge}»</li><li><b>NPC:</b> ${l.npc}</li><li><b>XP:</b> ${l.xp||'+'+l.bonus+' ao concluir o nível (XP por missão a definir)'}</li></ul><div class="npc box" style="margin-top:22px">${npcS(n)}<div><b>NPC</b><div class="say">${l.say}</div></div></div></aside></div>`;
+ return`<div class="top"><button class="ib" data-a="sel">← Voltar às fases</button>${l.tr?'<button class="ib" data-a="untr">Trocar de grupo</button>':''}<span class="px" style="font-family:var(--px);font-size:10px;color:var(--cy)">FASE 0${n} / 05</span></div>
+<section class="pn box"><h2>${l.ic} Nível ${n} – ${l.t}${l.g?' ('+l.g+')':''}</h2><div class="sb">${l.sub}</div><p><b>Duração sugerida:</b> ${l.dur}</p>${l.fl?`<p>${l.fl}</p>`:''}<p><b>Objetivo:</b> ${l.obj}</p><div class="bar" style="margin-top:12px"><i id="pb"></i></div><small id="pt"></small></section>
+${deck}${gdevActions}
+${l.wikiRef?`<div class="wiki-ref">📚 <b>Material de referência da GUX:</b> <button class="ib" data-a="openTask" data-id="${k}.wiki">Abrir referência dentro do ambiente ↗</button></div>`:''}
+${cols}`;
+}
+function canais(){const intro='<section class="pn box"><h2>📡 Canais de comunicação</h2><p><b>Primeiro, crie suas credenciais.</b> Acesse o Portal do Servidor e clique em “Não possui acesso? Clique aqui”, ou use o Cadastro SAURON. Informe CPF/CNPJ, nome e e-mail e aguarde o e-mail que permite cadastrar sua senha.</p></section>';
+ return`<div class="top"><button class="ib" data-a="back">← Voltar à Fase 1</button></div>${intro}`+CAN.map(g=>`<h3 class="gt">${g[0]}</h3>${g[1]?`<p class="gn">${g[1]}</p>`:''}<div class="grid">${g[2].map(s=>`<div class="lv box" style="cursor:default"><span class="ic">${s[0]}</span><h3>${s[1]}</h3><small>${s[2]}</small><div class="det" style="margin:6px 0 0">${s[3].map(x=>ln(x[0],x[1])).join('')}</div></div>`).join('')}</div>`).join('')+`<p class="det" style="margin:20px 5px">${ln('Solicitar acesso a outros sistemas (passo a passo)','https://documentos.sistemas.ro.gov.br/books/portal-do-servidor/page/solicitacao-de-acesso-ao-sistema')}</p>`}
+function hist(){return`<div class="top"><button class="ib" data-a="back">← Voltar à Fase 1</button></div><section class="pn box"><h2>📖 A história da SETIC</h2><div class="sb">Sua missão: conhecer de onde viemos</div>${HIST.length?`<ol class="tl">${HIST.map((h,i)=>`<li style="animation-delay:${i*.15}s"><b class="px" style="font-family:var(--px);color:var(--yel)">${h.y}</b><h3 class="s">${h.t}</h3><p>${h.d}</p></li>`).join('')}</ol>`:'<p>🚧 O texto reformulado da história da SETIC será inserido aqui.</p>'}</section>`}
+function fx(el,t){const r=el.getBoundingClientRect(),s=document.createElement('span');s.className='fx';s.textContent=t;s.style.left=r.left+r.width/2+'px';s.style.top=r.top+'px';document.body.appendChild(s);setTimeout(()=>s.remove(),1200)}
+function victory(l){const v=$('#vic'),nx=L[l.n];const cf=Array.from({length:22},(_,i)=>`<span class="cf" style="left:${(i*47)%100}%;background:${BC[i%5]};animation-delay:${(i%7)*.25}s"></span>`).join('');
+ v.innerHTML=`<div class="vb box">${cf}<h2>FASE ${l.n} CONCLUÍDA!</h2>${medS(l.n)}<p><b>Medalha: ${l.badge}</b><br>+${l.bonus} XP de bônus</p><div class="npc">${npcS(l.n)}<div class="say">${l.win||(l.n==5?'Parabéns! Você é um Guardião da Cultura CODE!':'Bom trabalho! Siga para a próxima fase da jornada.')}</div></div><p><button class="btn" data-a="next" data-n="${nx?nx.n:0}" style="animation:none">[ CONTINUAR JORNADA ]</button></p></div>`;v.hidden=false;$('#vic .btn').focus();beep(880,.25)}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+ if(a=='sel'){beep(520);cur.nb=0;go('sel')}
+ else if(a=='go'){const n=+b.dataset.n;if(n===5&&!finalUnlocked())return;const em=b.querySelector('.ic');if(em){em.classList.add('emote-activated');setTimeout(()=>go('lvl',n),420)}else go('lvl',n);beep(700)}
+ else if(a=='openTask'){
+  const id=b.dataset.id,n=cur.n;
+  go('activity',n,{id});
+ }
+ else if(a=='completeTask'||a=='completeSlide'){complete(b.dataset.id)}
+ else if(a=='task'){const id=b.dataset.id,I=taskInfo(parseInt(id),id);if(I.links.length===1&&!I.a)openExt(I.links[0][1],id);else taskModal(id)}
+ else if(a=='ext'){openExt(atob(b.dataset.u),b.dataset.id)}
+ else if(a=='mclose'){closeModal()}
+ else if(a=='gEdit'){const i=+b.dataset.i;gd=i<0?{i,nome:'',icone:'',membros:[{nome:'',foto:''}]}:{i,...JSON.parse(JSON.stringify(getGroups()[i]))};gRender()}
+ else if(a=='gMemAdd'){gSync();gd.membros.push({nome:'',foto:''});gRender()}
+ else if(a=='gMemDel'){gSync();gd.membros.splice(+b.dataset.i,1);gRender()}
+ else if(a=='gSave'){gSync();if(!gd.nome.trim()){toast('Dê um nome ao grupo.');return}const G=getGroups().slice(),g={nome:gd.nome.trim(),icone:gd.icone,membros:gd.membros.filter(m=>m.nome.trim()||m.foto).map(m=>({nome:m.nome.trim(),foto:m.foto}))};gd.i<0?G.push(g):G[gd.i]=g;setGroups(G);gd=null;closeModal();go('groups',3,3)}
+ else if(a=='gDel'){if(confirm('Excluir este grupo?')){const G=getGroups().slice();G.splice(+b.dataset.i,1);setGroups(G);go('groups',3,3)}}
+ else if(a=='gExport'){try{navigator.clipboard.writeText('const GROUPS_BASE='+JSON.stringify(getGroups())+';');toast('Código copiado ✓')}catch(_){}}
+ else if(a=='whoSave'){const nm=$('#wn').value.trim();if(!nm){$('#wn').focus();return}S.me={id:rnd(),name:nm,group:''};save();closeModal()}
+ else if(a=='admin'){go('admin')}
+ else if(a=='admLogin'){admLogin()}
+ else if(a=='admSignup'){admSignup()}
+ else if(a=='admOut'){sessionStorage.removeItem(SES);admFetched=0;go('sel')}
+ else if(a=='admInvite'){admInvite()}
+ else if(a=='admStatus'){const p=getReg()[b.dataset.id];if(p)$('#stbox').innerHTML=statusHtml(p)}
+ else if(a=='copy'){try{navigator.clipboard.writeText(b.dataset.u);toast('Link copiado ✓')}catch(_){}}
+ else if(a=='backActivity'){go('lvl',cur.n)}
+ else if(a=='groups'){go('groups',cur.n,cur.v==='lvl'?cur.n:3)}
+ else if(a=='final'){if(L.slice(0,4).every(done))go('lvl',5)}
+
+ else if(a=='hist'||a=='canais'){if(moId)closeModal();beep(700);go(a,0,cur.n)}
+ else if(a=='back'){go('lvl',cur.from||1)}
+ else if(a=='tr'){S.tr=b.dataset.k;save();go('lvl',3)}
+ else if(a=='untr'){S.tr=null;save();go('lvl',3)}
+ else if(a=='reset'){if(confirm('Apagar todo o progresso deste navegador?')){const me=S.me;S=fresh();S.me=me;save();go('start')}}
+ else if(a=='next'){$('#vic').hidden=true;+b.dataset.n?go('lvl',+b.dataset.n):go('sel')}
+ else if(a=='t'){/* conclusão feita na aba da atividade */}});
+
+/* ===== v8 ===== */
+// Opcional: URL de um backend (POST salva o registro de uma pessoa; GET devolve a lista) para os chefes verem todos os dispositivos
+const GROUPS_KEY='codeArcade.groups.v1',GROUPS_BASE=[];/* cole aqui o código copiado pelo botão "Copiar código dos grupos" para todos verem */
+const SYNC_URL='',FAST=120,MID=600,ADM='codeArcade.admin.v1',SES='codeArcade.sess',REG='codeArcade.people.v1';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rnd=()=>[...crypto.getRandomValues(new Uint8Array(8))].map(x=>x.toString(16).padStart(2,'0')).join('');
+const jget=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}},getReg=()=>jget(REG,{}),A=()=>jget(ADM,{chefs:[],inv:[]}),setA=a=>localStorage.setItem(ADM,JSON.stringify(a));
+let pend=null,moKind=null,moId=null,admFetched=0;
+function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),3200)}
+function reg(){if(!S.me)return;const r=getReg(),p={id:S.me.id,name:S.me.name,group:S.me.group,xp:S.xp,lv:L.filter(done).length,t:S.t,ts:S.ts,upd:Date.now()};r[p.id]=p;try{localStorage.setItem(REG,JSON.stringify(r))}catch(e){}if(SYNC_URL)fetch(SYNC_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(p)}).catch(()=>{})}
+function complete(id){const n=parseInt(id),l=lv(S,n),k=tasks(l).find(z=>z.id===id);if(!k||S.t[id])return;
+ S.t[id]=1;S.ts[id]=[Date.now(),k.t];let gain=0;if(!S.paid[id]){S.paid[id]=1;gain=k.x;S.xp+=gain}
+ if(gain)S.h.push('✔ '+k.t+' (+'+gain+' XP)');const won=finish(S,l);if(won){S.h.push('🏅 Medalha «'+l.badge+'» (+'+l.bonus+' XP)');cur.nb=n}
+ save();go('lvl',n);if(won)victory(l)}
+function openExt(u,id){const w=window.open(u,'_blank');if(w){try{w.opener=null}catch(_){}}
+ if(id&&!S.t[id]&&!moKind){if(w){pend={id,t:Date.now()};toast('Link aberto em nova aba. Ao voltar, a missão é contabilizada.')}else{complete(id);location.href=u}}}
+function chkPend(){if(pend&&document.visibilityState==='visible'&&Date.now()-pend.t>2500){const id=pend.id;pend=null;complete(id);toast('Missão contabilizada ✓')}}
+document.addEventListener('visibilitychange',chkPend);addEventListener('focus',chkPend);
+function openModal(h,kind,id){const m=$('#mo');m.innerHTML=h;m.hidden=false;moKind=kind;moId=id||null}
+function closeModal(){if(!moKind)return;const k=moKind,id=moId;moKind=moId=null;$('#mo').hidden=true;if(k==='task'&&id)complete(id)}
+$('#mo').addEventListener('click',e=>{if(e.target.id==='mo'&&moKind==='task')closeModal()});
+document.addEventListener('keydown',e=>{if(e.key=='Escape'&&moKind==='task')closeModal()});
+function taskModal(id){const I=taskInfo(parseInt(id),id),d=!!S.t[id];
+ const g=I.guidance?.length?`<div class="activity-resources"><b>PASSOS ESSENCIAIS</b><ol>${I.guidance.map(x=>`<li>${x}</li>`).join('')}</ol></div>`:'';
+ const p=I.people?.length?`<div class="activity-resources"><b>PESSOAS DE REFERÊNCIA</b>${I.people.map(pp).join('')}</div>`:'';
+ const b=I.links.map(x=>`<button class="lk" data-a="ext" data-u="${btoa(x[1])}">🔗 ${x[0]} ↗</button>`).join('')+(I.a?`<button class="lk" data-a="${I.a[0]}">${I.a[1]} →</button>`:'');
+ openModal(`<div class="mb"><button class="ib mx" data-a="mclose" aria-label="Fechar">✕</button><div class="activity-mark">MISSÃO · ${d?'CONCLUÍDA':'LEIA E FECHE PARA CONCLUIR'}</div><h2 class="mh2">${I.title}</h2><p>${I.description}</p>${g}${b?`<div class="activity-resources"><b>ACESSOS</b><div>${b}</div></div>`:''}${p}<div class="activity-complete"><button class="final-button" data-a="mclose">${d?'FECHAR':'ENTENDI · CONCLUIR ✓'}</button></div></div>`,'task',id)}
+function whoModal(){openModal(`<div class="mb"><div class="activity-mark">BEM-VINDO(A)</div><h2 class="mh2">Quem é você?</h2><p>Informe seu nome para registrar seu progresso no onboarding.</p><input id="wn" class="in" placeholder="Seu nome completo" maxlength="60"><div class="activity-complete"><button class="final-button" data-a="whoSave">COMEÇAR ✓</button></div></div>`,'who')}
+async function hash(p,s){const d=s+':'+p;if(window.crypto&&crypto.subtle){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(d));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}let h=5381;for(const c of d)h=(h*33^c.charCodeAt(0))>>>0;return'x'+h}
+const inviteTok=()=>(location.hash.match(/^#convite=(\w+)/)||[])[1];
+function admin(){const a=A(),me=sessionStorage.getItem(SES),tok=inviteTok(),back='<div class="top"><button class="ib" data-a="sel">← Voltar</button></div>';
+ const form=(t,sub,x,btn,act)=>`${back}<section class="pn box" style="max-width:520px"><h2>🔒 ${t}</h2><div class="sb">${sub}</div>${x}<input id="au" class="in" placeholder="Usuário" autocomplete="username" maxlength="30"><input id="ap" class="in" type="password" placeholder="Senha (mín. 6 caracteres)" autocomplete="current-password"><p id="aerr" class="note" style="color:var(--red)"></p><button class="final-button" data-a="${act}">${btn}</button></section>`,nm='<input id="an" class="in" placeholder="Seu nome" maxlength="60">';
+ if(tok&&!me)return a.inv.some(i=>i.t===tok&&i.exp>Date.now())?form('Cadastro de chefe','Convite válido. Crie seu acesso.',nm,'CRIAR ACESSO','admSignup'):form('Convite inválido','Expirado, já usado ou gerado em outro navegador.','','ENTRAR','admLogin');
+ if(!a.chefs.length)return form('Primeiro acesso','Crie o administrador (primeiro chefe).',nm,'CRIAR ADMINISTRADOR','admSignup');
+ if(!me)return form('Área dos chefes','Acesso restrito. Entre com seu usuário.','','ENTRAR','admLogin');
+ if(SYNC_URL&&!admFetched){admFetched=1;fetch(SYNC_URL).then(r=>r.json()).then(arr=>{const r=getReg();arr.forEach(p=>{if(!r[p.id]||p.upd>r[p.id].upd)r[p.id]=p});localStorage.setItem(REG,JSON.stringify(r));if(cur.v==='admin')go('admin')}).catch(()=>{})}
+ const ppl=Object.values(getReg()).sort((x,y)=>y.upd-x.upd),c=a.chefs.find(x=>x.u===me);
+ return`<div class="top"><button class="ib" data-a="sel">← Voltar</button><span><button class="ib" data-a="groups">👥 Gerenciar grupos</button> <button class="ib" data-a="admOut">Sair</button></span></div><section class="pn box"><h2>🔒 Painel dos chefes</h2><div class="sb">Olá, ${esc(c?c.name:me)}</div>${SYNC_URL?'':'<p class="note">Modo local: aparecem apenas as pessoas que usaram este navegador. Configure SYNC_URL para acompanhar todos.</p>'}</section>
+<section class="pn box"><h3 class="s">ACOMPANHAMENTO (${ppl.length})</h3><div class="tw"><table class="tb"><thead><tr><th>Nome</th><th>XP</th><th>Fases</th><th>Missões</th><th>Última atividade</th><th></th></tr></thead><tbody>${ppl.map(p=>`<tr><td>${esc(p.name)}</td><td>${+p.xp||0}</td><td>${+p.lv||0}/5</td><td>${Object.keys(p.t||{}).length}</td><td>${new Date(p.upd).toLocaleString('pt-BR')}</td><td>${Object.keys(p.ts||{}).length?`<button class="mission-open" data-a="admStatus" data-id="${esc(p.id)}">STATUS</button>`:''}</td></tr>`).join('')||'<tr><td colspan="6">Ninguém registrado ainda.</td></tr>'}</tbody></table></div><div id="stbox"></div></section>
+<section class="pn box"><h3 class="s">NOVO CHEFE · QR CODE</h3><p>Convite válido por 24 horas e de uso único.</p><button class="final-button" data-a="admInvite">GERAR QR CODE</button><div id="qrbox"></div><p class="note">Chefes cadastrados: ${a.chefs.map(x=>esc(x.name)).join(', ')}</p></section>`}
+async function admSignup(){const u=$('#au').value.trim().toLowerCase(),p=$('#ap').value,nm=($('#an')?.value||'').trim(),e=$('#aerr'),a=A();
+ if(!u||!nm||p.length<6){e.textContent='Preencha nome, usuário e senha (mín. 6 caracteres).';return}
+ if(a.chefs.some(c=>c.u===u)){e.textContent='Esse usuário já existe.';return}
+ if(a.chefs.length){const i=a.inv.findIndex(x=>x.t===inviteTok()&&x.exp>Date.now());if(i<0){e.textContent='Convite inválido.';return}a.inv.splice(i,1)}
+ const s=rnd();a.chefs.push({u,name:nm,s,h:await hash(p,s)});setA(a);sessionStorage.setItem(SES,u);history.replaceState(null,'',location.pathname+location.search);go('admin')}
+async function admLogin(){const u=$('#au').value.trim().toLowerCase(),c=A().chefs.find(x=>x.u===u);
+ if(c&&c.h===await hash($('#ap').value,c.s)){sessionStorage.setItem(SES,u);history.replaceState(null,'',location.pathname+location.search);go('admin')}else $('#aerr').textContent='Usuário ou senha incorretos.'}
+function admInvite(){const t=rnd(),a=A();a.inv=a.inv.filter(i=>i.exp>Date.now());a.inv.push({t,exp:Date.now()+864e5});setA(a);const url=location.href.split('#')[0]+'#convite='+t;
+ $('#qrbox').innerHTML=`<div id="qr" class="qr"></div><input class="in" readonly value="${esc(url)}"><button class="ib" data-a="copy" data-u="${esc(url)}">Copiar link</button>`;
+ if(window.QRCode)new QRCode($('#qr'),{text:url,width:210,height:210});else $('#qr').textContent='QR indisponível (sem internet). Use o link.'}
+const fmt=d=>d<60?Math.round(d)+' s':d<3600?Math.round(d/60)+' min':(d/3600).toFixed(1)+' h';
+function statusHtml(p){const ev=Object.values(p.ts||{}).map(v=>({t:v[0],n:v[1]})).sort((a,b)=>a.t-b.t);let fast=0;
+ const rows=ev.map((e,i)=>{const d=i?(e.t-ev[i-1].t)/1000:null,f=d!==null&&d<FAST;if(f)fast++;return`<tr class="${f?'warn':''}"><td>${esc(e.n)}</td><td>${new Date(e.t).toLocaleString('pt-BR')}</td><td>${d===null?'—':fmt(d)}</td><td>${d===null?'':f?'⚠ muito curto':d<MID?'curto':'ok'}</td></tr>`}).join('');
+ return`<h3 class="s" style="margin-top:18px">STATUS · ${esc(p.name)}</h3><p><b>${fast?`⚠ ${fast} conclusão(ões) com menos de ${FAST/60} min de intervalo.`:'✓ Ritmo compatível com estudo normal.'}</b> É um indicador, não prova: missões de leitura podem ser rápidas.</p><div class="tw"><table class="tb"><thead><tr><th>Missão</th><th>Concluída em</th><th>Intervalo</th><th>Avaliação</th></tr></thead><tbody>${rows}</tbody></table></div>`}
+window.addEventListener('storage',e=>{if(e.key===KEY){try{const z=JSON.parse(e.newValue);if(z){S=Object.assign(fresh(),z);go(cur.v,cur.n,cur.from)}}catch(_){}}});
+document.addEventListener('keydown',e=>{if(e.key=='Escape'&&!$('#vic').hidden)$('#vic').hidden=true});
+go('start');
+if(location.hash.startsWith('#convite='))go('admin');
+if(location.hash.startsWith('#atividade=')){try{const payload=JSON.parse(decodeURIComponent(location.hash.slice('#atividade='.length)));if(payload&&payload.id)go('activity',+payload.n,payload)}catch(_){}}
+</script></body></html>
